@@ -1,0 +1,64 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r message=FALSE}
+library(RPostgreSQL)
+library(reshape2)
+library(ggplot2)
+```
+
+```{r results='hide'}
+# connect to the database
+con <- dbConnect(dbDriver("PostgreSQL"), 
+                 dbname = "postgres",
+                 host = "localhost", 
+                 port = 5432,
+                 user = "postgres", 
+                 password = "apassword")
+
+# get the hourly weather for Arlington
+query = "SELECT date_trunc('hour', a.datetime) as datetime, 
+                ROUND(AVG((a.weather -> 'current_observation' ->> 'temp_f')::numeric), 1) AS outside_temp,
+                ROUND(AVG((b.room_temp)::numeric), 1) AS room_temp,
+                ROUND(AVG((b.vent_temp)::numeric), 1) AS vent_temp
+        FROM arlington_weather as a, apartment_temps as b
+        WHERE date_trunc('hour', a.datetime) = date_trunc('hour', b.datetime)
+        GROUP BY date_trunc('hour', a.datetime)
+        ORDER BY date_trunc('hour', a.datetime)"
+
+# store query results in a dataframe 
+df <- dbGetQuery(con, query)
+
+# disconnect from the database
+dbDisconnect(con)
+```
+
+```{r}
+# check the structure of the data
+str(df)
+```
+
+```{r}
+# reshape df from wide to long
+df.long <- melt(df, id=c("datetime"))
+```
+
+```{r}
+# plot temperatures over time
+ggplot(data=df.long, aes(x=datetime, y=value, color=variable)) +
+  geom_line(size=1.0) +
+  geom_point(size=2.0) +
+  xlab('Datetime') + 
+  ylab('Temperature') + 
+  ggtitle('Is My Air Conditioning Working?') +
+  theme(plot.title=element_text(lineheight=.8, face="bold", hjust=0.5),
+        legend.title=element_blank(), legend.position="bottom",
+        )
+```
+
+```{r}
+# show the last 5 observations
+tail(df)
+```

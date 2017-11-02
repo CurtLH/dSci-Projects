@@ -1,0 +1,192 @@
+---
+title: "R Notebook"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+Explore data related to whether or not a Camaro sells on eBay!
+
+```{r message=FALSE}
+library(RPostgreSQL)
+library(lubridate)
+library(ggplot2)
+library(caret)
+library(ROSE)
+library(pROC)
+```
+
+```{r results='hide'}
+# connect to the database
+con <- dbConnect(dbDriver("PostgreSQL"), 
+                 dbname = "postgres",
+                 host = "localhost", 
+                 port = 5432,
+                 user = "postgres", 
+                 password = "apassword")
+
+# make sure the table exists
+dbExistsTable(con, "ebay_6gen")
+
+# only look at cars with a clear title
+query = "SELECT * FROM ebay_6gen"
+
+# store query results in a dataframe
+df6gen <- dbGetQuery(con, query)
+
+# disconnect from the database
+dbDisconnect(con)
+```
+
+```{r}
+# inspect the structure of data
+str(df6gen)
+table(df6gen$status)
+```
+
+```{r}
+# subset the df6gen to only inlucde the columns of interest
+df6gen  <-  df6gen_all[, c('itemid', 
+                   'price', 
+                   'year', 
+                   'mileage', 
+                   'condition', 
+                   'cyl', 
+                   'trans', 
+                   'status', 
+                   'endtime')]
+
+# change status to 1/0, where 1 = EndedWithSales
+df6gen$status <- ifelse(df6gen$status == 'sold', 1, 0)
+
+# set variables type accordingly
+df6gen$price <-  as.numeric(df6gen$price)
+df6gen$year <- as.factor(df6gen$year)
+df6gen$condition <- factor(df6gen$condition, levels=c("Used", "Certified pre-owned", "New"), ordered=FALSE)
+df6gen$cyl <- as.factor(df6gen$cyl)
+df6gen$trans <- as.factor(df6gen$trans)
+df6gen$status <- as.factor(df6gen$status)
+df6gen$MONTH <- factor(month(df6gen$endtime), levels=seq(1, 12))
+df6gen$WDAY <- factor(wday(df6gen$endtime))
+df6gen$HOUR <- factor(hour(df6gen$endtime))
+df6gen$endtime <- NULL
+
+# create variable names for status
+levels(df6gen$year) <- make.names(levels(factor(df6gen$year)))
+levels(df6gen$condition) <- make.names(levels(factor(df6gen$condition)))
+levels(df6gen$cyl) <- make.names(levels(factor(df6gen$cyl)))
+levels(df6gen$trans) <- make.names(levels(factor(df6gen$trans)))
+levels(df6gen$status) <- make.names(c("notSold", "sold"))
+#levels(df6gen$MONTH) <- make.names(levels(factor(df6gen$MONTH)))
+#levels(df6gen$WDAY) <- make.names(levels(factor(df6gen$WDAY)))
+
+# drop records that contain a NA anywhere
+df6gen <- df6gen[complete.cases(df6gen),]
+
+# show sample of dataframe
+#head(df6gen)
+table(df6gen$status)
+```
+
+```{r}
+# create data partition
+set.seed(1234)
+trainIndex <- createDataPartition(df6gen$status,  
+                                  p = .7, 
+                                  list = FALSE, 
+                                  times = 1)
+
+# partition data into train and test
+imbal_train <- df6gen[ trainIndex,]
+imbal_test  <- df6gen[-trainIndex,]
+
+# look at the proportions of 1/0 in both the train and test data
+prop.table(table(imbal_train$status))
+table(imbal_train$status)
+prop.table(table(imbal_test$status))
+table(imbal_test$status)
+```
+
+```{r}
+# upsample training data for equal proportions of 1 and 0
+up_train <- upSample(x = imbal_train, y = imbal_train$status, list = FALSE)
+up_train$Class <- NULL
+
+# look at the new proporations of the upsampled data
+prop.table(table(up_train$status))
+table(up_train$status)
+```
+
+```{r}
+fitControl <- trainControl(method = "repeatedcv",
+                           number = 5,
+                           classProbs = TRUE,
+                           summaryFunction = twoClassSummary)
+```
+
+```{r}
+set.seed(1234)
+treebag_fit <- train(status ~ . -itemid, 
+                     data = up_train,
+                     method = "treebag",
+                     nbagg = 100,
+                     metric = "ROC",
+                     preProc = c("range"),
+                     trControl = fitControl, 
+                     na.action=na.exclude)
+
+treebag_fit
+```
+
+```{r}
+treebag_train <- predict(treebag_fit, imbal_train, type = "prob")
+treebag_train$pred <- factor(ifelse(treebag_train$sold >= .50, "sold", "notSold"))
+treebag_train <- cbind(treebag_train, actual = imbal_train$status)
+confusionMatrix(data = treebag_train$pred, reference = treebag_train$actual, positive = 'sold')
+```
+
+```{r}
+ggplot(data = treebag_train) +
+  geom_point(mapping = aes(x = sold, y = actual, color = pred), position = position_jitter(w = 0, h = 0.25)) +
+  ggtitle("Predicted Probability of Sold vs. Actual Selling Status") + 
+  theme(plot.title = element_text(lineheight=.8, face="bold", hjust = 0.5), ) +
+  labs(x = "Predicted Probability of Sold", y = "Actual Selling Status") +
+  theme(legend.title = element_text(face="bold"), legend.position = "right") +
+  scale_color_manual(name = "Predicted Status", values = c("#999999", "#CC0000"))
+```
+
+```{r}
+treebag_test <- predict(treebag_fit, imbal_test, type = "prob")
+treebag_test$pred <- factor(ifelse(treebag_test$sold >= .50, "sold", "notSold"))
+treebag_test <- cbind(treebag_test, actual = imbal_test$status)
+confusionMatrix(data = treebag_test$pred, reference = treebag_test$actual, positive = 'sold')
+```
+
+```{r}
+ggplot(data = treebag_test) +
+  geom_point(mapping = aes(x = sold, y = actual, color = pred), position = position_jitter(w = 0, h = 0.25)) +
+  ggtitle("Predicted Probability of Sold vs. Actual Selling Status") + 
+  theme(plot.title = element_text(lineheight=.8, face="bold", hjust = 0.5), ) +
+  labs(x = "Predicted Probability of Sold", y = "Actual Selling Status") +
+  theme(legend.title = element_text(face="bold"), legend.position = "right") +
+  scale_color_manual(name = "Predicted Status", values = c("#999999", "#CC0000"))
+```
+
+```{r}
+auc <- roc(imbal_test$status, treebag_test$notSold)
+plot(auc, ylim=c(0,1), print.thres=TRUE, main=paste('AUC:',round(auc$auc[[1]],2)))
+abline(h=1,col='blue',lwd=2)
+abline(h=0,col='red',lwd=2)
+```
+
+```{r}
+plot(varImp(treebag_fit), top=10)
+```
+
+```{r}
+results <- cbind(imbal_test, treebag_test)
+results <- results[order(-results$sold), ]
+head(results, n=20)
+```
+
+
