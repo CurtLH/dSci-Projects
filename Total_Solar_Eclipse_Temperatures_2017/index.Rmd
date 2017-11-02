@@ -1,0 +1,138 @@
+---
+title: "Temperature during Total Solar Eclipse 2017"
+author: "Curtis L. Hampton"
+date: "August 21, 2017"
+output: html_notebook
+---
+
+```{r message=FALSE}
+library(RPostgreSQL)
+library(reshape2)
+library(ggplot2)
+```
+
+```{r results='hide'}
+# connect to the database
+con <- dbConnect(dbDriver("PostgreSQL"), 
+                 dbname = "postgres",
+                 host = "localhost", 
+                 port = 5432,
+                 user = "postgres", 
+                 password = "apassword")
+
+# get the weather for Arlington
+query1 = "SELECT datetime, 
+          weather -> 'current_observation' ->> 'temp_f' AS outside_temp
+          FROM arlington_weather
+          WHERE date_trunc('day', datetime) = '2017-08-21'
+          ORDER BY datetime
+         "
+
+# store query results in a dataframe 
+df_mon <- dbGetQuery(con, query1)
+
+# get the weather for Arlington
+query2 = "SELECT datetime, 
+          weather -> 'current_observation' ->> 'temp_f' AS outside_temp
+          FROM arlington_weather
+          WHERE date_trunc('day', datetime) = '2017-08-20'
+          ORDER BY datetime
+         "
+
+# store query results in a dataframe 
+df_tue <- dbGetQuery(con, query2)
+
+# store temp_f as float
+df_mon$outside_temp <- as.numeric(df_mon$outside_temp)
+df_tue$outside_temp <- as.numeric(df_tue$outside_temp)
+
+# disconnect from the database
+dbDisconnect(con)
+```
+
+```{r}
+# plot temperatures over time
+p1 <-ggplot(data=df_tue, aes(x=datetime, y=outside_temp)) +
+     geom_line(aes(color=outside_temp)) +
+     geom_point(size=1.5, aes(color=outside_temp)) +
+     scale_color_gradient2(midpoint=median(df_tue$outside_temp), low="blue", mid="white", high="red" ) +
+     scale_y_continuous(breaks = round(seq(min(df_tue$outside_temp), max(df_tue$outside_temp), by = 2.0),1),
+                        ylab("")) +
+     ggtitle('Arlington, VA Temperature on August 20st, 2017') +
+     theme(plot.title=element_text(lineheight=.8, face="bold", hjust=0.5),
+           legend.position='none',
+           panel.background = element_rect(fill = 'black', colour = 'black'),
+           panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            axis.title.x=element_blank())
+
+```
+
+```{r}
+# plot temperatures over time
+p2 <- ggplot(data=df_mon, aes(x=datetime, y=outside_temp)) +
+      geom_line(aes(color=outside_temp)) +
+      geom_point(size=1.5, aes(color=outside_temp)) +
+      scale_color_gradient2(midpoint=median(df_mon$outside_temp), low="blue", mid="white", high="red" ) +
+      scale_y_continuous(breaks = round(seq(min(df_mon$outside_temp), max(df_mon$outside_temp), by = 2.0),1),
+                         ylab("")) +
+      ggtitle('Arlington, VA Temperature on August 21st, 2017') +
+      theme(plot.title=element_text(lineheight=.8, face="bold", hjust=0.5),
+            legend.position='none',
+            panel.background = element_rect(fill = 'black', colour = 'black'),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            axis.title.x=element_blank())
+```
+
+```{r}
+# Multiple plot function
+#
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  require(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
+
+```{r}
+# create multiple polt
+multiplot(p1, p2)
+```
