@@ -1,8 +1,8 @@
 ---
 title: "R Notebook"
-output:
-  html_document: default
-  html_notebook: default
+name: "Curtis Hampton"
+date: "November 5th, 2017"
+output: html_document
 ---
 
 Challenge:
@@ -13,6 +13,7 @@ improve conversion rate
 ```{r}
 library(ggplot2)
 library(caret)
+library(pROC)
 ```
 
 
@@ -70,8 +71,7 @@ Now that the apparent outliers have been addressed, we will proceed with investi
 
 ```{r}
 # calculate the overall conversion rate
-conv <- nrow(df[df$converted == 1, ]) / nrow(df)
-conv
+nrow(df[df$converted == 1, ]) / nrow(df)
 ```
 
 While the overall conversion rate is good to know, in order to identify areas for improvement, we will drill in further to better understand how conversion rate breaks down across our various attributes. 
@@ -151,6 +151,7 @@ We can use a technique to "balance" the training data, which would make the prop
 Alternatively, we could use Decision Trees or Random Forests to predict conversion, which perform well on imbalanced data. 
 
 ```{r}
+# view the data to remember the variables
 head(df)
 ```
 
@@ -164,8 +165,48 @@ fitControl <- trainControl(method = "repeatedcv",
 ```
 
 ```{r}
-# for the Random Forest Model to the data
-treebag_fit <- train(converted ~ .)
+# fit decision tree to the data
+rpart_fit <- train(converted ~ ., 
+                     data = train,
+                     method = "rpart")
+
+# inspect model fit on train data
+rpart_fit
+```
+
+```{r}
+# fit the model to the test data
+rpart_test <- predict(rpart_fit, test, type = "prob")
+
+# use 0.50 threshold for classifying not-converted vs converted
+rpart_test$pred <- factor(ifelse(rpart_test$`1` >= 0.50, 1, 0))
+
+# combine the predicted status and the actual status
+rpart_test <- cbind(rpart_test, actual = test$converted)
+
+# create a confusion matrix to evaluate model performance
+confusionMatrix(data = rpart_test$pred, reference = rpart_test$actual, positive = '1')
+```
+
+Based on the Confusion Matrix, we can see that our model (0.984) is out-performing the naive rule (0.967), which would be if we predicted all users into the majority class.
+
+To better understand how our model is worked, we will plots the predicted probability compared to the actual status. 
+
+```{r}
+head(rpart_test)
+```
+
+
+```{r}
+# plot the posterior probability vs actual
+ggplot(data = rpart_test) +
+  geom_point(mapping = aes(x = `1`, y = actual, color = pred), position = position_jitter(w = 0, h = 0.25)) +
+  labs(x = "Predicted Probability", y = "Actual Status")
+```
+
+```{r}
+# plot variable importance
+plot(varImp(rpart_fit))
 ```
 
 
