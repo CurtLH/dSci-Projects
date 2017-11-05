@@ -1,0 +1,147 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# load packages
+library("ggplot2")
+library("caret")
+library("pROC")
+library("ROCR")
+```
+
+```{r}
+# load the data from the MASS package
+df <- read.csv("./universal_bank.csv")
+```
+
+```{r}
+# convert variables to factors as needed
+cols <- c("ZIP", "Education", "SecuritiesAccount", "CDAccount", "Online", "CreditCard", "PersonalLoan")
+df[cols] <- lapply(df[cols], factor)
+```
+
+```{r}
+# create names for the class variable
+levels(df$PersonalLoan) <- make.names(c("No", "Yes"))
+```
+
+```{r}
+# show a sample of the data
+head(df)
+```
+
+```{r}
+# show the structure of the data
+str(df)
+```
+
+```{r}
+# split data into training and test
+trainIndex <- createDataPartition(df$PersonalLoan, p = .7, 
+                                  list = FALSE, 
+                                  times = 1)
+
+train <- df[ trainIndex,]
+test  <- df[-trainIndex,]
+```
+
+```{r}
+# look at class proportions between training and test data
+cat("Proportion of PersonalLoan in training data:")
+prop.table(table(train$PersonalLoan))
+```
+
+```{r}
+cat("\nProportion of PersonLoan in test data:")
+prop.table(table(test$PersonalLoan))
+```
+
+```{r}
+fit_ctrl <- trainControl(method = "repeatedcv", 
+                         repeats = 5,
+                         classProbs = TRUE,
+                         summaryFunction = twoClassSummary)
+```
+
+```{r}
+set.seed(1234)
+rpart_fit <- train(PersonalLoan ~ ., 
+                   data = train,
+                   method = "rpart",
+                   metric = "ROC",
+                   trControl = fit_ctrl,
+                   na.action = na.exclude)
+```
+
+```{r}
+rpart_fit
+```
+
+```{r}
+rpart_pred <- predict(rpart_fit, test, type = "prob")
+rpart_pred$pred <- factor(ifelse(rpart_pred$Yes >= .5, "Yes", "No"))
+rpart_pred <- cbind(rpart_pred, actual = test$PersonalLoan)
+```
+
+```{r}
+confusionMatrix(data = rpart_pred$pred, 
+                reference = rpart_pred$actual, 
+                positive = levels(test$PersonalLoan)[2])
+```
+
+```{r}
+set.seed(1234)
+treebag_fit <- train(PersonalLoan ~ ., 
+                     data = train,
+                     method = "treebag",
+                     nbagg = 100,
+                     metric = "ROC",
+                     trControl = fit_ctrl, 
+                     na.action=na.exclude)
+```
+
+```{r}
+treebag_fit
+```
+
+```{r}
+treebag_pred <- predict(treebag_fit, test, type = "prob")
+treebag_pred$pred <- factor(ifelse(treebag_pred$Yes >= .5, "Yes", "No"))
+treebag_pred <- cbind(treebag_pred, actual = test$PersonalLoan)
+```
+
+```{r}
+confusionMatrix(data = treebag_pred$pred, 
+                reference = treebag_pred$actual, 
+                positive = levels(test$PersonalLoan)[2])
+```
+
+```{r}
+set.seed(1234)
+svm_fit <- train(PersonalLoan ~ ., 
+                 data = train, 
+                 method = "svmRadial", 
+                 trControl = fit_ctrl, 
+                 preProc = c("center", "scale"),
+                 tuneLength = 8,
+                 metric = "ROC", 
+                 na.action = na.exclude)
+```
+
+```{r}
+svm_fit
+```
+
+```{r}
+svm_pred <- predict(svm_fit, test, type = "prob")
+svm_pred$pred <- factor(ifelse(svm_pred$Yes >= .5, "Yes", "No"))
+svm_pred <- cbind(svm_pred, actual = test$PersonalLoan)
+```
+
+```{r}
+confusionMatrix(data = svm_pred$pred, 
+                reference = svm_pred$actual,
+                positive = levels(test$PersonalLoan)[2])
+```

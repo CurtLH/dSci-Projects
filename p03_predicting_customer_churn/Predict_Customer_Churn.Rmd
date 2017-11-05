@@ -1,0 +1,162 @@
+---
+title: "Predicting Customer Churn"
+name: "Curtis Hampton"
+date: "March 29th, 2017"
+output: html_notebook
+---
+
+# Customize Enviornment
+```{r}
+# load packages
+library(caret)
+library(ggplot2)
+
+# set default plot size
+options(repr.plot.width=10, repr.plot.height=6)
+```
+
+# Load Data
+```{r}
+act_activity <- read.csv("account_activity.csv")
+cust_info <- read.csv("customer_info.csv")
+new_cust <- read.csv("new_customers.csv")
+```
+
+# Inspect Data
+```{r}
+# look at structure for account activity
+str(act_activity)
+
+# look at structure for customer information
+str(cust_info)
+
+# fix variable types where necessary
+cust_info$Churn <- as.factor(cust_info$Churn)
+levels(cust_info$Churn) <- make.names(c("no", "yes"))
+cust_info$State <- as.factor(cust_info$State)
+cust_info$Area_Code <- as.factor(cust_info$Area_Code)
+```
+
+# Look for Duplicates
+```{r}
+# count the number of rows in each dataset
+nrow(act_activity)
+nrow(cust_info)
+nrow(new_cust)
+
+# remove complete case duplicates
+act_activity <- unique(act_activity)
+cust_info <- unique(cust_info)
+new_cust <- unique(new_cust)
+
+# after removing duplicates, count the number of rows again
+nrow(act_activity)
+nrow(cust_info)
+nrow(new_cust)
+```
+
+# Feature Engineering
+```{r}
+# create a new variable for the total number of calls
+act_activity$Total_Calls <- act_activity$Day_Calls + act_activity$Eve_Calls + act_activity$Night_Calls + act_activity$Intl_Charge
+```
+
+
+# Merge Data
+```{r}
+# merge account activity with customer information
+df <- merge(act_activity, cust_info, by="Customer.ID")
+```
+
+
+```{r}
+# create partition
+set.seed(1234)
+trainIndex <- createDataPartition(df$Churn, 
+                                  p = .7, 
+                                  list = FALSE, 
+                                  times = 1)
+
+# put data into training and test 
+train_df <- df[ trainIndex,]
+test_df  <- df[-trainIndex,]
+
+# check proportion of event in both datasets
+cat("Proportion of customers that churned within the training data:")
+prop.table(table(train_df$Churn))
+
+cat("\nProportion of customers that churned within the test data:")
+prop.table(table(test_df$Churn))
+```
+
+```{r}
+# set up control for cross-validation
+ctrl <- trainControl(method = "repeatedcv", 
+                     repeats = 5,
+                     classProbs = TRUE,
+                     summaryFunction = twoClassSummary)
+
+# run bagged classification model
+set.seed(1234)
+tree_fit <- train(Churn ~ . -Customer.ID -Phone,
+                  data = train_df,
+                  method = "treebag",
+                  nbagg = 50,
+                  metric = "ROC",
+                  preProc = c("center", "scale"),
+                  trControl = ctrl)
+
+# show the results of the model
+tree_fit
+```
+
+```{r}
+# fit model to training data
+tree_train <- predict(tree_fit, newdata = train_df, type = "prob")
+
+# set cut-off value for churn
+tree_train$pred <- factor(ifelse(tree_train$yes >= 0.45, "yes", "no"))
+tree_train <- cbind(tree_train, actual = train_df$Churn)
+
+# review performance of model on training data
+confusionMatrix(data = tree_train$pred, reference = tree_train$actual, positive = 'yes')
+```
+
+```{r}
+# plot the posterior probability vs actual
+ggplot(data = tree_train) +
+  geom_point(mapping = aes(x = yes, y = actual, color = pred), position = position_jitter(w = 0, h = 0.25)) +
+  ggtitle("Predicted Probability of Churn vs. Actual Churn Status") + 
+  theme(plot.title = element_text(lineheight=.8, face="bold", hjust = 0.5), ) +
+  labs(x = "Predicted Probability of Churn", y = "Actual Churn Status") +
+  theme(legend.title = element_text(face="bold"), legend.position = "right") +
+  scale_color_manual(name = "Predicted Status", values = c("#999999", "#CC0000"))
+```
+
+```{r}
+# fit model to test data
+tree_test <- predict(tree_fit, newdata = test_df, type = "prob")
+
+# set cut-off value for churn
+tree_test$pred <- factor(ifelse(tree_test$yes >= .45, "yes", "no"))
+tree_test <- cbind(tree_test, actual = test_df$Churn)
+
+# review performance of model on test data
+confusionMatrix(data = tree_test$pred, reference = tree_test$actual, positive = 'yes')
+```
+
+```{r}
+# plot the posterior probability vs actual
+ggplot(data = tree_test) +
+  geom_point(mapping = aes(x = yes, y = actual, color = pred), position = position_jitter(w = 0, h = 0.25)) +
+  ggtitle("Predicted Probability of Churn vs. Actual Churn Status") + 
+  theme(plot.title = element_text(lineheight=.8, face="bold", hjust = 0.5), ) +
+  labs(x = "Predicted Probability of Churn", y = "Actual Churn Status") +
+  theme(legend.title = element_text(face="bold"), legend.position = "right") +
+  scale_color_manual(name = "Predicted Status", values = c("#999999", "#CC0000"))
+```
+
+```{r}
+# plot variable importance
+plot(varImp(tree_fit), top=20)
+```

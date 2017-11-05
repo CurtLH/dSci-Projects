@@ -1,0 +1,180 @@
+---
+title: "R Notebook"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+Challenge:
+1. Predict conversion rate
+2. Come up with recommendations for the product team and the marketing team to
+improve conversion rate
+
+```{r}
+library(ggplot2)
+library(caret)
+```
+
+
+```{r}
+# read CSV data into dataframe
+df = read.csv('conversion_date.csv')
+```
+
+```{r}
+# inspect the structure of the data
+str(df)
+```
+
+```{r}
+# recode new_user and converted into factors
+df$new_user <- as.factor(df$new_user)
+df$converted <- as.factor(df$converted)
+```
+
+```{r}
+# take a quick summary look at the data
+summary(df)
+```
+
+From the summary statistics, we can see that one of our customers is 123 years old. This is potentially a data entry issue, so further investigation is needed. 
+
+```{r}
+# investigate person that is 123 years old
+df[df$age == 123, ]
+```
+
+To see if there are other users that are also very old, let's look at the top 5 oldest users. 
+
+```{r}
+# grab just the ages and sort in descending order
+ages <- sort(df$age, decreasing = TRUE)
+
+# show the top 5 oldest ages
+head(ages)
+```
+
+While it's certainly possible that two users are 111 and 123 years old, it's more likely that this is a date entry issue. For this reason, we will remove these two records from the dataset.
+
+```{r}
+# remove records with age over 100
+df <- df[df$age < 100, ]
+```
+
+```{r}
+# calculate summary statistics on the new dataframe excluding data entry errors
+summary(df)
+```
+
+Now that the apparent outliers have been addressed, we will proceed with investigating the conversion rate. 
+
+```{r}
+# calculate the overall conversion rate
+conv <- nrow(df[df$converted == 1, ]) / nrow(df)
+conv
+```
+
+While the overall conversion rate is good to know, in order to identify areas for improvement, we will drill in further to better understand how conversion rate breaks down across our various attributes. 
+
+```{r}
+# calculate the conversion rate by country
+prop.table(table(df$country, df$converted), 1)
+```
+
+Germany has the highest conversion rate (6.24%) and China has the lowest (0.13%). 
+
+```{r}
+# create a new variable for binning ages into groups
+age_bin <- findInterval(df$age, c(10, 20, 30, 40, 50, 60, 70, 80))
+
+# calculate the conversion rate by age
+prop.table(table(age_bin, df$converted), 1)
+```
+
+The conversion rate is highest for the youngest age range (6.49%), and steadily decreases and users get older. 
+
+```{r}
+# calculate the conversion rate by new user vs. old user
+prop.table(table(df$new_user, df$converted), 1)
+```
+
+Old users have a higher conversion rate (7.19%) compared to new users (1.40%). 
+
+```{r}
+# calculate the conversion rate by source
+prop.table(table(df$source, df$converted), 1)
+```
+
+All marketing channel sources have very similiar conversion rates (~3%).
+
+```{r}
+# create a new variable for binning total pages visited into groups
+total_pages_visited_bin <- findInterval(df$total_pages_visited, c(0, 5, 10, 15, 20, 25, 30))
+
+# calculate the conversion rate by total pages visited
+prop.table(table(total_pages_visited_bin, df$converted), 1)
+```
+
+The more pages a user visits, the higher the conversion rate. 
+
+Now that we are more familiar with the dataset, let's proceed to build a model to predict whether or not a user will convert. 
+
+```{r}
+# create a partiion based on converted
+set.seed <- 1234
+trainIndex <- createDataPartition(df$converted,
+                                  p = 0.7, 
+                                  list = FALSE, 
+                                  times = 1)
+
+# split the data into training and test
+train <- df[ trainIndex, ]
+test  <- df[-trainIndex, ]
+```
+
+```{r}
+# check the proportion of converted in the train data
+prop.table(table(train$converted))
+```
+
+```{r}
+# check the proportion of converted in the test data
+prop.table(table(test$converted))
+```
+
+Because the proportion of users converted is extremely similiar between out train and test data, worked as intended. 
+
+While the proportion of those who converted compared to did not convert is extremely unbalanced (3.24% vs. 96.74%), there are some decisions to be made before choosing a model technique. 
+
+We can use a technique to "balance" the training data, which would make the proportion of converted to non-converted more similiar by resampling the data. Some of the techniques available include up-sampling, down-sampling, and synthetic sampling.
+
+Alternatively, we could use Decision Trees or Random Forests to predict conversion, which perform well on imbalanced data. 
+
+```{r}
+head(df)
+```
+
+
+```{r}
+# determine the fit control for the model
+fitControl <- trainControl(method = "repeatedcv", 
+                           number = 5,
+                           classProbs = TRUE,
+                           summaryFunction = twoClassSummary)
+```
+
+```{r}
+# for the Random Forest Model to the data
+treebag_fit <- train(converted ~ .)
+```
+
+
+
+
+
+
+Conclusion:
+- China has the lowest conversion rate. Maybe this is due to translation issues with the Chinese version of the website. 
+- The younger users have a higher conversion rate than the older user. Maybe this is because the product appeals to younger users more than older users. Alternatively, maybe it's because older users are less likely to purchase over the internet, and they are calling in to place their order instead.
+- All of the marketing channels are performing fairly similiar.
+- The more pages a user visits during a session, the more likely they are to make a purchase. This implies that improving user interaction with the website could lead to increased conversion rates. 
