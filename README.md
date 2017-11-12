@@ -6,7 +6,7 @@ Jupyter Notebook that runs a logisitic regression using every permutation of the
 #### [Predict Loan Acceptance](https://curtlh.github.io/dSci-Projects/p02_predict_loan_acceptance/predict_loan_acceptance.nb.html)
 
 
-##### [Predict Customer Churn](https://curtlh.github.io/dSci-Projects/p03_predict_customer_churn/predict_customer_churn.nb.html)
+#### [Predict Customer Churn](https://curtlh.github.io/dSci-Projects/p03_predict_customer_churn/predict_customer_churn.nb.html)
 
 
 #### [Google AdWord Correlations](https://github.com/CurtLH/dSci-Projects/tree/master/p04_google_adword_correlation)
