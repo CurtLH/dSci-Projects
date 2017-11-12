@@ -1,11 +1,9 @@
 ---
-title: "R Notebook"
-output:
-  html_document: default
-  html_notebook: default
+title: "Camaros on eBay!: Predicting Selling Price"
+author: "Curtis L. Hampton"
+date: "August 21, 2017"
+output: html_notebook
 ---
-
-Explore data related to whether or not a Camaro sells on eBay!
 
 ```{r message=FALSE}
 library(RPostgreSQL)
@@ -41,7 +39,6 @@ dbDisconnect(con)
 ```{r}
 # inspect the structure of data
 str(df_all)
-table(df_all$status)
 ```
 
 ```{r}
@@ -54,7 +51,9 @@ df  <-  df_all[, c('itemid',
                    'cyl', 
                    'trans',
                    'trim')]
+```
 
+```{r}
 # set variables type accordingly
 df$price <-  as.numeric(df$price)
 df$year <- as.factor(df$year)
@@ -62,13 +61,17 @@ df$condition <- factor(df$condition, levels=c("Used", "Certified pre-owned", "Ne
 df$cyl <- as.factor(df$cyl)
 df$trans <- as.factor(df$trans)
 df$trim <- as.factor(df$trim)
+```
 
+```{r}
 # create variable names for status
 levels(df$year) <- make.names(levels(factor(df$year)))
 levels(df$condition) <- make.names(levels(factor(df$condition)))
 levels(df$cyl) <- make.names(levels(factor(df$cyl)))
 levels(df$trans) <- make.names(levels(factor(df$trans)))
+```
 
+```{r}
 # drop records that contain a NA anywhere
 df <- df[complete.cases(df),]
 ```
@@ -143,6 +146,7 @@ fit <- lm(price ~ year + mileage + cyl + trans + condition,
 ```
 
 ```{r}
+# check for multi-collinearity
 vif(fit)
 ```
 
@@ -157,6 +161,7 @@ results <- cbind(pred = predict(fit), resid = resid(fit), std_resid = rstandard(
 ```
 
 ```{r}
+# plot the model fit
 plot(fit)
 ```
 
@@ -178,11 +183,13 @@ head(results, n=10)
 ```
 
 ```{r}
+# plot residual for each year
 ggplot(data = results) +
   geom_boxplot(mapping = aes(x = year, y = std_resid, fill = year))
 ```
 
 ```{r}
+# plot residual for each trim level
 ggplot(data = results) +
   geom_boxplot(mapping = aes(x = trim, y = std_resid, fill = trim))
 ```

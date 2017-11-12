@@ -173,8 +173,6 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<div id="customize-enviornment" class="section level1">
-<h1>Customize Enviornment</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb2FkIHBhY2thZ2VzXG5saWJyYXJ5KGNhcmV0KVxubGlicmFyeShnZ3Bsb3QyKVxuIyBzZXQgZGVmYXVsdCBwbG90IHNpemVcbm9wdGlvbnMocmVwci5wbG90LndpZHRoPTEwLCByZXByLnBsb3QuaGVpZ2h0PTYpXG5gYGAifQ== -->
@@ -186,31 +184,47 @@ options(repr.plot.width=10, repr.plot.height=6)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
-<div id="load-data" class="section level1">
-<h1>Load Data</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWN0X2FjdGl2aXR5IDwtIHJlYWQuY3N2KFwiYWNjb3VudF9hY3Rpdml0eS5jc3ZcIilcbmN1c3RfaW5mbyA8LSByZWFkLmNzdihcImN1c3RvbWVyX2luZm8uY3N2XCIpXG5uZXdfY3VzdCA8LSByZWFkLmNzdihcIm5ld19jdXN0b21lcnMuY3N2XCIpXG5gYGAifQ== -->
-<pre class="r"><code>act_activity &lt;- read.csv(&quot;account_activity.csv&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb2FkIGRhdGFcbmFjdF9hY3Rpdml0eSA8LSByZWFkLmNzdihcImFjY291bnRfYWN0aXZpdHkuY3N2XCIpXG5jdXN0X2luZm8gPC0gcmVhZC5jc3YoXCJjdXN0b21lcl9pbmZvLmNzdlwiKVxubmV3X2N1c3QgPC0gcmVhZC5jc3YoXCJuZXdfY3VzdG9tZXJzLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code># load data
+act_activity &lt;- read.csv(&quot;account_activity.csv&quot;)
 cust_info &lt;- read.csv(&quot;customer_info.csv&quot;)
 new_cust &lt;- read.csv(&quot;new_customers.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
 <div id="inspect-data" class="section level1">
 <h1>Inspect Data</h1>
+<p>Make sure that variables are formatted as they should be, and if not, adjust variable type accordingly.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsb29rIGF0IHN0cnVjdHVyZSBmb3IgYWNjb3VudCBhY3Rpdml0eVxuc3RyKGFjdF9hY3Rpdml0eSlcblxuIyBsb29rIGF0IHN0cnVjdHVyZSBmb3IgY3VzdG9tZXIgaW5mb3JtYXRpb25cbnN0cihjdXN0X2luZm8pXG5cbiMgZml4IHZhcmlhYmxlIHR5cGVzIHdoZXJlIG5lY2Vzc2FyeVxuY3VzdF9pbmZvJENodXJuIDwtIGFzLmZhY3RvcihjdXN0X2luZm8kQ2h1cm4pXG5sZXZlbHMoY3VzdF9pbmZvJENodXJuKSA8LSBtYWtlLm5hbWVzKGMoXCJub1wiLCBcInllc1wiKSlcbmN1c3RfaW5mbyRTdGF0ZSA8LSBhcy5mYWN0b3IoY3VzdF9pbmZvJFN0YXRlKVxuY3VzdF9pbmZvJEFyZWFfQ29kZSA8LSBhcy5mYWN0b3IoY3VzdF9pbmZvJEFyZWFfQ29kZSlcbmBgYCJ9 -->
-<pre class="r"><code># look at structure for account activity
-str(act_activity)
-
-# look at structure for customer information
-str(cust_info)
-
-# fix variable types where necessary
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBpbnNwZWN0IGRhdGEgc3R1Y3R1cmVcbnN0cihhY3RfYWN0aXZpdHkpXG5gYGAifQ== -->
+<pre class="r"><code># inspect data stucture
+str(act_activity)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBpbnNwZWN0IGRhdGEgc3R1Y3R1cmVcbnN0cihjdXN0X2luZm8pXG5gYGAifQ== -->
+<pre class="r"><code># inspect data stucture
+str(cust_info)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBpbnNwZWN0IGRhdGEgc3R1Y3R1cmVcbnN0cihuZXdfY3VzdClcbmBgYCJ9 -->
+<pre class="r"><code># inspect data stucture
+str(new_cust)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmaXggdmFyaWFibGUgdHlwZXMgd2hlcmUgbmVjZXNzYXJ5XG5jdXN0X2luZm8kQ2h1cm4gPC0gYXMuZmFjdG9yKGN1c3RfaW5mbyRDaHVybilcbmxldmVscyhjdXN0X2luZm8kQ2h1cm4pIDwtIG1ha2UubmFtZXMoYyhcIm5vXCIsIFwieWVzXCIpKVxuY3VzdF9pbmZvJFN0YXRlIDwtIGFzLmZhY3RvcihjdXN0X2luZm8kU3RhdGUpXG5jdXN0X2luZm8kQXJlYV9Db2RlIDwtIGFzLmZhY3RvcihjdXN0X2luZm8kQXJlYV9Db2RlKVxuYGBgIn0= -->
+<pre class="r"><code># fix variable types where necessary
 cust_info$Churn &lt;- as.factor(cust_info$Churn)
 levels(cust_info$Churn) &lt;- make.names(c(&quot;no&quot;, &quot;yes&quot;))
 cust_info$State &lt;- as.factor(cust_info$State)
@@ -218,25 +232,64 @@ cust_info$Area_Code &lt;- as.factor(cust_info$Area_Code)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
-<div id="look-for-duplicates" class="section level1">
-<h1>Look for Duplicates</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3MgaW4gZWFjaCBkYXRhc2V0XG5ucm93KGFjdF9hY3Rpdml0eSlcbm5yb3coY3VzdF9pbmZvKVxubnJvdyhuZXdfY3VzdClcblxuIyByZW1vdmUgY29tcGxldGUgY2FzZSBkdXBsaWNhdGVzXG5hY3RfYWN0aXZpdHkgPC0gdW5pcXVlKGFjdF9hY3Rpdml0eSlcbmN1c3RfaW5mbyA8LSB1bmlxdWUoY3VzdF9pbmZvKVxubmV3X2N1c3QgPC0gdW5pcXVlKG5ld19jdXN0KVxuXG4jIGFmdGVyIHJlbW92aW5nIGR1cGxpY2F0ZXMsIGNvdW50IHRoZSBudW1iZXIgb2Ygcm93cyBhZ2FpblxubnJvdyhhY3RfYWN0aXZpdHkpXG5ucm93KGN1c3RfaW5mbylcbm5yb3cobmV3X2N1c3QpXG5gYGAifQ== -->
-<pre class="r"><code># count the number of rows in each dataset
-nrow(act_activity)
-nrow(cust_info)
-nrow(new_cust)
-
-# remove complete case duplicates
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3Ncbm5yb3coYWN0X2FjdGl2aXR5KVxuYGBgIn0= -->
+<pre class="r"><code># count the number of rows
+nrow(act_activity)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3Ncbm5yb3coY3VzdF9pbmZvKVxuYGBgIn0= -->
+<pre class="r"><code># count the number of rows
+nrow(cust_info)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3Ncbm5yb3cobmV3X2N1c3QpXG5gYGAifQ== -->
+<pre class="r"><code># count the number of rows
+nrow(new_cust)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="remove-duplicates" class="section level1">
+<h1>Remove Duplicates</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZW1vdmUgY29tcGxldGUgY2FzZSBkdXBsaWNhdGVzXG5hY3RfYWN0aXZpdHkgPC0gdW5pcXVlKGFjdF9hY3Rpdml0eSlcbmN1c3RfaW5mbyA8LSB1bmlxdWUoY3VzdF9pbmZvKVxubmV3X2N1c3QgPC0gdW5pcXVlKG5ld19jdXN0KVxuYGBgIn0= -->
+<pre class="r"><code># remove complete case duplicates
 act_activity &lt;- unique(act_activity)
 cust_info &lt;- unique(cust_info)
-new_cust &lt;- unique(new_cust)
-
-# after removing duplicates, count the number of rows again
-nrow(act_activity)
-nrow(cust_info)
+new_cust &lt;- unique(new_cust)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>After removing duplicates, count the number of rows again</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3Ncbm5yb3coYWN0X2FjdGl2aXR5KVxuYGBgIn0= -->
+<pre class="r"><code># count the number of rows
+nrow(act_activity)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3Ncbm5yb3coY3VzdF9pbmZvKVxuYGBgIn0= -->
+<pre class="r"><code># count the number of rows
+nrow(cust_info)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3Ncbm5yb3cobmV3X2N1c3QpXG5gYGAifQ== -->
+<pre class="r"><code># count the number of rows
 nrow(new_cust)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -244,17 +297,19 @@ nrow(new_cust)</code></pre>
 </div>
 <div id="feature-engineering" class="section level1">
 <h1>Feature Engineering</h1>
+<p>In the existing dataset, there is no variable for the total number of calls made per customer. Create a new variable the sums the number of day calls, evening calls, and night calls.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjcmVhdGUgYSBuZXcgdmFyaWFibGUgZm9yIHRoZSB0b3RhbCBudW1iZXIgb2YgY2FsbHNcbmFjdF9hY3Rpdml0eSRUb3RhbF9DYWxscyA8LSBhY3RfYWN0aXZpdHkkRGF5X0NhbGxzICsgYWN0X2FjdGl2aXR5JEV2ZV9DYWxscyArIGFjdF9hY3Rpdml0eSROaWdodF9DYWxscyArIGFjdF9hY3Rpdml0eSRJbnRsX0NoYXJnZVxuYGBgIn0= -->
-<pre class="r"><code># create a new variable for the total number of calls
-act_activity$Total_Calls &lt;- act_activity$Day_Calls + act_activity$Eve_Calls + act_activity$Night_Calls + act_activity$Intl_Charge</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjcmVhdGUgdG90YWxfY2FsbHMgY2FyaWFibGVzXG5hY3RfYWN0aXZpdHkkVG90YWxfQ2FsbHMgPC0gYWN0X2FjdGl2aXR5JERheV9DYWxscyArIGFjdF9hY3Rpdml0eSRFdmVfQ2FsbHMgKyBhY3RfYWN0aXZpdHkkTmlnaHRfQ2FsbHMgKyBcbmBgYCJ9 -->
+<pre class="r"><code># create total_calls cariables
+act_activity$Total_Calls &lt;- act_activity$Day_Calls + act_activity$Eve_Calls + act_activity$Night_Calls + </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="merge-data" class="section level1">
-<h1>Merge Data</h1>
+<div id="merge-datasets" class="section level1">
+<h1>Merge Datasets</h1>
+<p>To include both account activity and customer information in the dataset used for predicting customer churn, we can join the datasets based on Customer ID.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBtZXJnZSBhY2NvdW50IGFjdGl2aXR5IHdpdGggY3VzdG9tZXIgaW5mb3JtYXRpb25cbmRmIDwtIG1lcmdlKGFjdF9hY3Rpdml0eSwgY3VzdF9pbmZvLCBieT1cIkN1c3RvbWVyLklEXCIpXG5gYGAifQ== -->
@@ -263,9 +318,13 @@ df &lt;- merge(act_activity, cust_info, by=&quot;Customer.ID&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="partition-data" class="section level1">
+<h1>Partition Data</h1>
+<p>Before running a model, we will split the dataset into a training dataset and a test dataset. The training dataset will be used to build the model, and the test dataset will be used to evaluate the model.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjcmVhdGUgcGFydGl0aW9uXG5zZXQuc2VlZCgxMjM0KVxudHJhaW5JbmRleCA8LSBjcmVhdGVEYXRhUGFydGl0aW9uKGRmJENodXJuLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwID0gLjcsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxpc3QgPSBGQUxTRSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGltZXMgPSAxKVxuXG4jIHB1dCBkYXRhIGludG8gdHJhaW5pbmcgYW5kIHRlc3QgXG50cmFpbl9kZiA8LSBkZlsgdHJhaW5JbmRleCxdXG50ZXN0X2RmICA8LSBkZlstdHJhaW5JbmRleCxdXG5cbiMgY2hlY2sgcHJvcG9ydGlvbiBvZiBldmVudCBpbiBib3RoIGRhdGFzZXRzXG5jYXQoXCJQcm9wb3J0aW9uIG9mIGN1c3RvbWVycyB0aGF0IGNodXJuZWQgd2l0aGluIHRoZSB0cmFpbmluZyBkYXRhOlwiKVxucHJvcC50YWJsZSh0YWJsZSh0cmFpbl9kZiRDaHVybikpXG5cbmNhdChcIlxcblByb3BvcnRpb24gb2YgY3VzdG9tZXJzIHRoYXQgY2h1cm5lZCB3aXRoaW4gdGhlIHRlc3QgZGF0YTpcIilcbnByb3AudGFibGUodGFibGUodGVzdF9kZiRDaHVybikpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjcmVhdGUgcGFydGl0aW9uXG5zZXQuc2VlZCgxMjM0KVxudHJhaW5JbmRleCA8LSBjcmVhdGVEYXRhUGFydGl0aW9uKGRmJENodXJuLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwID0gLjcsIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxpc3QgPSBGQUxTRSwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGltZXMgPSAxKVxuXG4jIHB1dCBkYXRhIGludG8gdHJhaW5pbmcgYW5kIHRlc3RcbnRyYWluX2RmIDwtIGRmWyB0cmFpbkluZGV4LF1cbnRlc3RfZGYgIDwtIGRmWy10cmFpbkluZGV4LF1cbmBgYCJ9 -->
 <pre class="r"><code># create partition
 set.seed(1234)
 trainIndex &lt;- createDataPartition(df$Churn, 
@@ -273,29 +332,45 @@ trainIndex &lt;- createDataPartition(df$Churn,
                                   list = FALSE, 
                                   times = 1)
 
-# put data into training and test 
+# put data into training and test
 train_df &lt;- df[ trainIndex,]
-test_df  &lt;- df[-trainIndex,]
-
-# check proportion of event in both datasets
-cat(&quot;Proportion of customers that churned within the training data:&quot;)
-prop.table(table(train_df$Churn))
-
-cat(&quot;\nProportion of customers that churned within the test data:&quot;)
-prop.table(table(test_df$Churn))</code></pre>
+test_df  &lt;- df[-trainIndex,]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>We will inspect the proportion of churned customers in the training and test datasets to make sure they are similiar</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcC50YWJsZSh0YWJsZSh0cmFpbl9kZiRDaHVybikpXG5gYGAifQ== -->
+<pre class="r"><code>prop.table(table(train_df$Churn))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzZXQgdXAgY29udHJvbCBmb3IgY3Jvc3MtdmFsaWRhdGlvblxuY3RybCA8LSB0cmFpbkNvbnRyb2wobWV0aG9kID0gXCJyZXBlYXRlZGN2XCIsIFxuICAgICAgICAgICAgICAgICAgICAgcmVwZWF0cyA9IDUsXG4gICAgICAgICAgICAgICAgICAgICBjbGFzc1Byb2JzID0gVFJVRSxcbiAgICAgICAgICAgICAgICAgICAgIHN1bW1hcnlGdW5jdGlvbiA9IHR3b0NsYXNzU3VtbWFyeSlcblxuIyBydW4gYmFnZ2VkIGNsYXNzaWZpY2F0aW9uIG1vZGVsXG5zZXQuc2VlZCgxMjM0KVxudHJlZV9maXQgPC0gdHJhaW4oQ2h1cm4gfiAuIC1DdXN0b21lci5JRCAtUGhvbmUsXG4gICAgICAgICAgICAgICAgICBkYXRhID0gdHJhaW5fZGYsXG4gICAgICAgICAgICAgICAgICBtZXRob2QgPSBcInRyZWViYWdcIixcbiAgICAgICAgICAgICAgICAgIG5iYWdnID0gNTAsXG4gICAgICAgICAgICAgICAgICBtZXRyaWMgPSBcIlJPQ1wiLFxuICAgICAgICAgICAgICAgICAgcHJlUHJvYyA9IGMoXCJjZW50ZXJcIiwgXCJzY2FsZVwiKSxcbiAgICAgICAgICAgICAgICAgIHRyQ29udHJvbCA9IGN0cmwpXG5cbiMgc2hvdyB0aGUgcmVzdWx0cyBvZiB0aGUgbW9kZWxcbnRyZWVfZml0XG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvcC50YWJsZSh0YWJsZSh0ZXN0X2RmJENodXJuKSlcbmBgYCJ9 -->
+<pre class="r"><code>prop.table(table(test_df$Churn))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="fit-model-to-training-data" class="section level1">
+<h1>Fit Model to Training Data</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzZXQgdXAgY29udHJvbCBmb3IgY3Jvc3MtdmFsaWRhdGlvblxuY3RybCA8LSB0cmFpbkNvbnRyb2wobWV0aG9kID0gXCJyZXBlYXRlZGN2XCIsIFxuICAgICAgICAgICAgICAgICAgICAgcmVwZWF0cyA9IDUsXG4gICAgICAgICAgICAgICAgICAgICBjbGFzc1Byb2JzID0gVFJVRSxcbiAgICAgICAgICAgICAgICAgICAgIHN1bW1hcnlGdW5jdGlvbiA9IHR3b0NsYXNzU3VtbWFyeSlcbmBgYCJ9 -->
 <pre class="r"><code># set up control for cross-validation
 ctrl &lt;- trainControl(method = &quot;repeatedcv&quot;, 
                      repeats = 5,
                      classProbs = TRUE,
-                     summaryFunction = twoClassSummary)
-
-# run bagged classification model
+                     summaryFunction = twoClassSummary)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBydW4gYmFnZ2VkIGNsYXNzaWZpY2F0aW9uIG1vZGVsIHVzaW5nIHRoZSB0cmFpbmluZyBkYXRhXG5zZXQuc2VlZCgxMjM0KVxudHJlZV9maXQgPC0gdHJhaW4oQ2h1cm4gfiAuIC1DdXN0b21lci5JRCAtUGhvbmUsXG4gICAgICAgICAgICAgICAgICBkYXRhID0gdHJhaW5fZGYsXG4gICAgICAgICAgICAgICAgICBtZXRob2QgPSBcInRyZWViYWdcIixcbiAgICAgICAgICAgICAgICAgIG5iYWdnID0gNTAsXG4gICAgICAgICAgICAgICAgICBtZXRyaWMgPSBcIlJPQ1wiLFxuICAgICAgICAgICAgICAgICAgcHJlUHJvYyA9IGMoXCJjZW50ZXJcIiwgXCJzY2FsZVwiKSxcbiAgICAgICAgICAgICAgICAgIHRyQ29udHJvbCA9IGN0cmwpXG5gYGAifQ== -->
+<pre class="r"><code># run bagged classification model using the training data
 set.seed(1234)
 tree_fit &lt;- train(Churn ~ . -Customer.ID -Phone,
                   data = train_df,
@@ -303,24 +378,39 @@ tree_fit &lt;- train(Churn ~ . -Customer.ID -Phone,
                   nbagg = 50,
                   metric = &quot;ROC&quot;,
                   preProc = c(&quot;center&quot;, &quot;scale&quot;),
-                  trControl = ctrl)
-
-# show the results of the model
+                  trControl = ctrl)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzaG93IHRoZSByZXN1bHRzIG9mIHRoZSBtb2RlbFxudHJlZV9maXRcbmBgYCJ9 -->
+<pre class="r"><code># show the results of the model
 tree_fit</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmaXQgbW9kZWwgdG8gdHJhaW5pbmcgZGF0YVxudHJlZV90cmFpbiA8LSBwcmVkaWN0KHRyZWVfZml0LCBuZXdkYXRhID0gdHJhaW5fZGYsIHR5cGUgPSBcInByb2JcIilcblxuIyBzZXQgY3V0LW9mZiB2YWx1ZSBmb3IgY2h1cm5cbnRyZWVfdHJhaW4kcHJlZCA8LSBmYWN0b3IoaWZlbHNlKHRyZWVfdHJhaW4keWVzID49IDAuNDUsIFwieWVzXCIsIFwibm9cIikpXG50cmVlX3RyYWluIDwtIGNiaW5kKHRyZWVfdHJhaW4sIGFjdHVhbCA9IHRyYWluX2RmJENodXJuKVxuXG4jIHJldmlldyBwZXJmb3JtYW5jZSBvZiBtb2RlbCBvbiB0cmFpbmluZyBkYXRhXG5jb25mdXNpb25NYXRyaXgoZGF0YSA9IHRyZWVfdHJhaW4kcHJlZCwgcmVmZXJlbmNlID0gdHJlZV90cmFpbiRhY3R1YWwsIHBvc2l0aXZlID0gJ3llcycpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmaXQgbW9kZWwgdG8gdHJhaW5pbmcgZGF0YVxudHJlZV90cmFpbiA8LSBwcmVkaWN0KHRyZWVfZml0LCBuZXdkYXRhID0gdHJhaW5fZGYsIHR5cGUgPSBcInByb2JcIilcbmBgYCJ9 -->
 <pre class="r"><code># fit model to training data
-tree_train &lt;- predict(tree_fit, newdata = train_df, type = &quot;prob&quot;)
-
-# set cut-off value for churn
+tree_train &lt;- predict(tree_fit, newdata = train_df, type = &quot;prob&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzZXQgY3V0LW9mZiB2YWx1ZSBmb3IgY2h1cm5cbnRyZWVfdHJhaW4kcHJlZCA8LSBmYWN0b3IoaWZlbHNlKHRyZWVfdHJhaW4keWVzID49IDAuNDUsIFwieWVzXCIsIFwibm9cIikpXG50cmVlX3RyYWluIDwtIGNiaW5kKHRyZWVfdHJhaW4sIGFjdHVhbCA9IHRyYWluX2RmJENodXJuKVxuYGBgIn0= -->
+<pre class="r"><code># set cut-off value for churn
 tree_train$pred &lt;- factor(ifelse(tree_train$yes &gt;= 0.45, &quot;yes&quot;, &quot;no&quot;))
-tree_train &lt;- cbind(tree_train, actual = train_df$Churn)
-
-# review performance of model on training data
+tree_train &lt;- cbind(tree_train, actual = train_df$Churn)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZXZpZXcgcGVyZm9ybWFuY2Ugb2YgbW9kZWwgb24gdHJhaW5pbmcgZGF0YVxuY29uZnVzaW9uTWF0cml4KGRhdGEgPSB0cmVlX3RyYWluJHByZWQsIHJlZmVyZW5jZSA9IHRyZWVfdHJhaW4kYWN0dWFsLCBwb3NpdGl2ZSA9ICd5ZXMnKVxuYGBgIn0= -->
+<pre class="r"><code># review performance of model on training data
 confusionMatrix(data = tree_train$pred, reference = tree_train$actual, positive = 'yes')</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -339,17 +429,30 @@ ggplot(data = tree_train) +
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="fit-model-to-test-data" class="section level1">
+<h1>Fit Model to Test Data</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmaXQgbW9kZWwgdG8gdGVzdCBkYXRhXG50cmVlX3Rlc3QgPC0gcHJlZGljdCh0cmVlX2ZpdCwgbmV3ZGF0YSA9IHRlc3RfZGYsIHR5cGUgPSBcInByb2JcIilcblxuIyBzZXQgY3V0LW9mZiB2YWx1ZSBmb3IgY2h1cm5cbnRyZWVfdGVzdCRwcmVkIDwtIGZhY3RvcihpZmVsc2UodHJlZV90ZXN0JHllcyA+PSAuNDUsIFwieWVzXCIsIFwibm9cIikpXG50cmVlX3Rlc3QgPC0gY2JpbmQodHJlZV90ZXN0LCBhY3R1YWwgPSB0ZXN0X2RmJENodXJuKVxuXG4jIHJldmlldyBwZXJmb3JtYW5jZSBvZiBtb2RlbCBvbiB0ZXN0IGRhdGFcbmNvbmZ1c2lvbk1hdHJpeChkYXRhID0gdHJlZV90ZXN0JHByZWQsIHJlZmVyZW5jZSA9IHRyZWVfdGVzdCRhY3R1YWwsIHBvc2l0aXZlID0gJ3llcycpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBmaXQgbW9kZWwgdG8gdGVzdCBkYXRhXG50cmVlX3Rlc3QgPC0gcHJlZGljdCh0cmVlX2ZpdCwgbmV3ZGF0YSA9IHRlc3RfZGYsIHR5cGUgPSBcInByb2JcIilcbmBgYCJ9 -->
 <pre class="r"><code># fit model to test data
-tree_test &lt;- predict(tree_fit, newdata = test_df, type = &quot;prob&quot;)
-
-# set cut-off value for churn
+tree_test &lt;- predict(tree_fit, newdata = test_df, type = &quot;prob&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBzZXQgY3V0LW9mZiB2YWx1ZSBmb3IgY2h1cm5cbnRyZWVfdGVzdCRwcmVkIDwtIGZhY3RvcihpZmVsc2UodHJlZV90ZXN0JHllcyA+PSAuNDUsIFwieWVzXCIsIFwibm9cIikpXG50cmVlX3Rlc3QgPC0gY2JpbmQodHJlZV90ZXN0LCBhY3R1YWwgPSB0ZXN0X2RmJENodXJuKVxuYGBgIn0= -->
+<pre class="r"><code># set cut-off value for churn
 tree_test$pred &lt;- factor(ifelse(tree_test$yes &gt;= .45, &quot;yes&quot;, &quot;no&quot;))
-tree_test &lt;- cbind(tree_test, actual = test_df$Churn)
-
-# review performance of model on test data
+tree_test &lt;- cbind(tree_test, actual = test_df$Churn)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZXZpZXcgcGVyZm9ybWFuY2Ugb2YgbW9kZWwgb24gdGVzdCBkYXRhXG5jb25mdXNpb25NYXRyaXgoZGF0YSA9IHRyZWVfdGVzdCRwcmVkLCByZWZlcmVuY2UgPSB0cmVlX3Rlc3QkYWN0dWFsLCBwb3NpdGl2ZSA9ICd5ZXMnKVxuYGBgIn0= -->
+<pre class="r"><code># review performance of model on test data
 confusionMatrix(data = tree_test$pred, reference = tree_test$actual, positive = 'yes')</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -368,6 +471,10 @@ ggplot(data = tree_test) +
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="identify-variable-importance" class="section level1">
+<h1>Identify Variable Importance</h1>
+<p>Variable importance measures the amount of decrease in accuracy of the model when each variable is removed from the model.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwbG90IHZhcmlhYmxlIGltcG9ydGFuY2VcbnBsb3QodmFySW1wKHRyZWVfZml0KSwgdG9wPTIwKVxuYGBgIn0= -->
@@ -377,7 +484,7 @@ plot(varImp(tree_fit), top=20)</code></pre>
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJlZGljdGluZyBDdXN0b21lciBDaHVybiIKbmFtZTogIkN1cnRpcyBIYW1wdG9uIgpkYXRlOiAiTWFyY2ggMjl0aCwgMjAxNyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKIyBDdXN0b21pemUgRW52aW9ybm1lbnQKYGBge3J9CiMgbG9hZCBwYWNrYWdlcwpsaWJyYXJ5KGNhcmV0KQpsaWJyYXJ5KGdncGxvdDIpCgojIHNldCBkZWZhdWx0IHBsb3Qgc2l6ZQpvcHRpb25zKHJlcHIucGxvdC53aWR0aD0xMCwgcmVwci5wbG90LmhlaWdodD02KQpgYGAKCiMgTG9hZCBEYXRhCmBgYHtyfQphY3RfYWN0aXZpdHkgPC0gcmVhZC5jc3YoImFjY291bnRfYWN0aXZpdHkuY3N2IikKY3VzdF9pbmZvIDwtIHJlYWQuY3N2KCJjdXN0b21lcl9pbmZvLmNzdiIpCm5ld19jdXN0IDwtIHJlYWQuY3N2KCJuZXdfY3VzdG9tZXJzLmNzdiIpCmBgYAoKIyBJbnNwZWN0IERhdGEKYGBge3J9CiMgbG9vayBhdCBzdHJ1Y3R1cmUgZm9yIGFjY291bnQgYWN0aXZpdHkKc3RyKGFjdF9hY3Rpdml0eSkKCiMgbG9vayBhdCBzdHJ1Y3R1cmUgZm9yIGN1c3RvbWVyIGluZm9ybWF0aW9uCnN0cihjdXN0X2luZm8pCgojIGZpeCB2YXJpYWJsZSB0eXBlcyB3aGVyZSBuZWNlc3NhcnkKY3VzdF9pbmZvJENodXJuIDwtIGFzLmZhY3RvcihjdXN0X2luZm8kQ2h1cm4pCmxldmVscyhjdXN0X2luZm8kQ2h1cm4pIDwtIG1ha2UubmFtZXMoYygibm8iLCAieWVzIikpCmN1c3RfaW5mbyRTdGF0ZSA8LSBhcy5mYWN0b3IoY3VzdF9pbmZvJFN0YXRlKQpjdXN0X2luZm8kQXJlYV9Db2RlIDwtIGFzLmZhY3RvcihjdXN0X2luZm8kQXJlYV9Db2RlKQpgYGAKCiMgTG9vayBmb3IgRHVwbGljYXRlcwpgYGB7cn0KIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3MgaW4gZWFjaCBkYXRhc2V0Cm5yb3coYWN0X2FjdGl2aXR5KQpucm93KGN1c3RfaW5mbykKbnJvdyhuZXdfY3VzdCkKCiMgcmVtb3ZlIGNvbXBsZXRlIGNhc2UgZHVwbGljYXRlcwphY3RfYWN0aXZpdHkgPC0gdW5pcXVlKGFjdF9hY3Rpdml0eSkKY3VzdF9pbmZvIDwtIHVuaXF1ZShjdXN0X2luZm8pCm5ld19jdXN0IDwtIHVuaXF1ZShuZXdfY3VzdCkKCiMgYWZ0ZXIgcmVtb3ZpbmcgZHVwbGljYXRlcywgY291bnQgdGhlIG51bWJlciBvZiByb3dzIGFnYWluCm5yb3coYWN0X2FjdGl2aXR5KQpucm93KGN1c3RfaW5mbykKbnJvdyhuZXdfY3VzdCkKYGBgCgojIEZlYXR1cmUgRW5naW5lZXJpbmcKYGBge3J9CiMgY3JlYXRlIGEgbmV3IHZhcmlhYmxlIGZvciB0aGUgdG90YWwgbnVtYmVyIG9mIGNhbGxzCmFjdF9hY3Rpdml0eSRUb3RhbF9DYWxscyA8LSBhY3RfYWN0aXZpdHkkRGF5X0NhbGxzICsgYWN0X2FjdGl2aXR5JEV2ZV9DYWxscyArIGFjdF9hY3Rpdml0eSROaWdodF9DYWxscyArIGFjdF9hY3Rpdml0eSRJbnRsX0NoYXJnZQpgYGAKCgojIE1lcmdlIERhdGEKYGBge3J9CiMgbWVyZ2UgYWNjb3VudCBhY3Rpdml0eSB3aXRoIGN1c3RvbWVyIGluZm9ybWF0aW9uCmRmIDwtIG1lcmdlKGFjdF9hY3Rpdml0eSwgY3VzdF9pbmZvLCBieT0iQ3VzdG9tZXIuSUQiKQpgYGAKCgpgYGB7cn0KIyBjcmVhdGUgcGFydGl0aW9uCnNldC5zZWVkKDEyMzQpCnRyYWluSW5kZXggPC0gY3JlYXRlRGF0YVBhcnRpdGlvbihkZiRDaHVybiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwID0gLjcsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbGlzdCA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRpbWVzID0gMSkKCiMgcHV0IGRhdGEgaW50byB0cmFpbmluZyBhbmQgdGVzdCAKdHJhaW5fZGYgPC0gZGZbIHRyYWluSW5kZXgsXQp0ZXN0X2RmICA8LSBkZlstdHJhaW5JbmRleCxdCgojIGNoZWNrIHByb3BvcnRpb24gb2YgZXZlbnQgaW4gYm90aCBkYXRhc2V0cwpjYXQoIlByb3BvcnRpb24gb2YgY3VzdG9tZXJzIHRoYXQgY2h1cm5lZCB3aXRoaW4gdGhlIHRyYWluaW5nIGRhdGE6IikKcHJvcC50YWJsZSh0YWJsZSh0cmFpbl9kZiRDaHVybikpCgpjYXQoIlxuUHJvcG9ydGlvbiBvZiBjdXN0b21lcnMgdGhhdCBjaHVybmVkIHdpdGhpbiB0aGUgdGVzdCBkYXRhOiIpCnByb3AudGFibGUodGFibGUodGVzdF9kZiRDaHVybikpCmBgYAoKYGBge3J9CiMgc2V0IHVwIGNvbnRyb2wgZm9yIGNyb3NzLXZhbGlkYXRpb24KY3RybCA8LSB0cmFpbkNvbnRyb2wobWV0aG9kID0gInJlcGVhdGVkY3YiLCAKICAgICAgICAgICAgICAgICAgICAgcmVwZWF0cyA9IDUsCiAgICAgICAgICAgICAgICAgICAgIGNsYXNzUHJvYnMgPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICBzdW1tYXJ5RnVuY3Rpb24gPSB0d29DbGFzc1N1bW1hcnkpCgojIHJ1biBiYWdnZWQgY2xhc3NpZmljYXRpb24gbW9kZWwKc2V0LnNlZWQoMTIzNCkKdHJlZV9maXQgPC0gdHJhaW4oQ2h1cm4gfiAuIC1DdXN0b21lci5JRCAtUGhvbmUsCiAgICAgICAgICAgICAgICAgIGRhdGEgPSB0cmFpbl9kZiwKICAgICAgICAgICAgICAgICAgbWV0aG9kID0gInRyZWViYWciLAogICAgICAgICAgICAgICAgICBuYmFnZyA9IDUwLAogICAgICAgICAgICAgICAgICBtZXRyaWMgPSAiUk9DIiwKICAgICAgICAgICAgICAgICAgcHJlUHJvYyA9IGMoImNlbnRlciIsICJzY2FsZSIpLAogICAgICAgICAgICAgICAgICB0ckNvbnRyb2wgPSBjdHJsKQoKIyBzaG93IHRoZSByZXN1bHRzIG9mIHRoZSBtb2RlbAp0cmVlX2ZpdApgYGAKCmBgYHtyfQojIGZpdCBtb2RlbCB0byB0cmFpbmluZyBkYXRhCnRyZWVfdHJhaW4gPC0gcHJlZGljdCh0cmVlX2ZpdCwgbmV3ZGF0YSA9IHRyYWluX2RmLCB0eXBlID0gInByb2IiKQoKIyBzZXQgY3V0LW9mZiB2YWx1ZSBmb3IgY2h1cm4KdHJlZV90cmFpbiRwcmVkIDwtIGZhY3RvcihpZmVsc2UodHJlZV90cmFpbiR5ZXMgPj0gMC40NSwgInllcyIsICJubyIpKQp0cmVlX3RyYWluIDwtIGNiaW5kKHRyZWVfdHJhaW4sIGFjdHVhbCA9IHRyYWluX2RmJENodXJuKQoKIyByZXZpZXcgcGVyZm9ybWFuY2Ugb2YgbW9kZWwgb24gdHJhaW5pbmcgZGF0YQpjb25mdXNpb25NYXRyaXgoZGF0YSA9IHRyZWVfdHJhaW4kcHJlZCwgcmVmZXJlbmNlID0gdHJlZV90cmFpbiRhY3R1YWwsIHBvc2l0aXZlID0gJ3llcycpCmBgYAoKYGBge3J9CiMgcGxvdCB0aGUgcG9zdGVyaW9yIHByb2JhYmlsaXR5IHZzIGFjdHVhbApnZ3Bsb3QoZGF0YSA9IHRyZWVfdHJhaW4pICsKICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IHllcywgeSA9IGFjdHVhbCwgY29sb3IgPSBwcmVkKSwgcG9zaXRpb24gPSBwb3NpdGlvbl9qaXR0ZXIodyA9IDAsIGggPSAwLjI1KSkgKwogIGdndGl0bGUoIlByZWRpY3RlZCBQcm9iYWJpbGl0eSBvZiBDaHVybiB2cy4gQWN0dWFsIENodXJuIFN0YXR1cyIpICsgCiAgdGhlbWUocGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChsaW5laGVpZ2h0PS44LCBmYWNlPSJib2xkIiwgaGp1c3QgPSAwLjUpLCApICsKICBsYWJzKHggPSAiUHJlZGljdGVkIFByb2JhYmlsaXR5IG9mIENodXJuIiwgeSA9ICJBY3R1YWwgQ2h1cm4gU3RhdHVzIikgKwogIHRoZW1lKGxlZ2VuZC50aXRsZSA9IGVsZW1lbnRfdGV4dChmYWNlPSJib2xkIiksIGxlZ2VuZC5wb3NpdGlvbiA9ICJyaWdodCIpICsKICBzY2FsZV9jb2xvcl9tYW51YWwobmFtZSA9ICJQcmVkaWN0ZWQgU3RhdHVzIiwgdmFsdWVzID0gYygiIzk5OTk5OSIsICIjQ0MwMDAwIikpCmBgYAoKYGBge3J9CiMgZml0IG1vZGVsIHRvIHRlc3QgZGF0YQp0cmVlX3Rlc3QgPC0gcHJlZGljdCh0cmVlX2ZpdCwgbmV3ZGF0YSA9IHRlc3RfZGYsIHR5cGUgPSAicHJvYiIpCgojIHNldCBjdXQtb2ZmIHZhbHVlIGZvciBjaHVybgp0cmVlX3Rlc3QkcHJlZCA8LSBmYWN0b3IoaWZlbHNlKHRyZWVfdGVzdCR5ZXMgPj0gLjQ1LCAieWVzIiwgIm5vIikpCnRyZWVfdGVzdCA8LSBjYmluZCh0cmVlX3Rlc3QsIGFjdHVhbCA9IHRlc3RfZGYkQ2h1cm4pCgojIHJldmlldyBwZXJmb3JtYW5jZSBvZiBtb2RlbCBvbiB0ZXN0IGRhdGEKY29uZnVzaW9uTWF0cml4KGRhdGEgPSB0cmVlX3Rlc3QkcHJlZCwgcmVmZXJlbmNlID0gdHJlZV90ZXN0JGFjdHVhbCwgcG9zaXRpdmUgPSAneWVzJykKYGBgCgpgYGB7cn0KIyBwbG90IHRoZSBwb3N0ZXJpb3IgcHJvYmFiaWxpdHkgdnMgYWN0dWFsCmdncGxvdChkYXRhID0gdHJlZV90ZXN0KSArCiAgZ2VvbV9wb2ludChtYXBwaW5nID0gYWVzKHggPSB5ZXMsIHkgPSBhY3R1YWwsIGNvbG9yID0gcHJlZCksIHBvc2l0aW9uID0gcG9zaXRpb25faml0dGVyKHcgPSAwLCBoID0gMC4yNSkpICsKICBnZ3RpdGxlKCJQcmVkaWN0ZWQgUHJvYmFiaWxpdHkgb2YgQ2h1cm4gdnMuIEFjdHVhbCBDaHVybiBTdGF0dXMiKSArIAogIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQobGluZWhlaWdodD0uOCwgZmFjZT0iYm9sZCIsIGhqdXN0ID0gMC41KSwgKSArCiAgbGFicyh4ID0gIlByZWRpY3RlZCBQcm9iYWJpbGl0eSBvZiBDaHVybiIsIHkgPSAiQWN0dWFsIENodXJuIFN0YXR1cyIpICsKICB0aGVtZShsZWdlbmQudGl0bGUgPSBlbGVtZW50X3RleHQoZmFjZT0iYm9sZCIpLCBsZWdlbmQucG9zaXRpb24gPSAicmlnaHQiKSArCiAgc2NhbGVfY29sb3JfbWFudWFsKG5hbWUgPSAiUHJlZGljdGVkIFN0YXR1cyIsIHZhbHVlcyA9IGMoIiM5OTk5OTkiLCAiI0NDMDAwMCIpKQpgYGAKCmBgYHtyfQojIHBsb3QgdmFyaWFibGUgaW1wb3J0YW5jZQpwbG90KHZhckltcCh0cmVlX2ZpdCksIHRvcD0yMCkKYGBgCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJlZGljdGluZyBDdXN0b21lciBDaHVybiIKbmFtZTogIkN1cnRpcyBIYW1wdG9uIgpkYXRlOiAiTWFyY2ggMjl0aCwgMjAxNyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkoY2FyZXQpCmxpYnJhcnkoZ2dwbG90MikKYGBgCgpgYGB7cn0KIyBsb2FkIGRhdGEKYWN0X2FjdGl2aXR5IDwtIHJlYWQuY3N2KCJhY2NvdW50X2FjdGl2aXR5LmNzdiIpCmN1c3RfaW5mbyA8LSByZWFkLmNzdigiY3VzdG9tZXJfaW5mby5jc3YiKQpuZXdfY3VzdCA8LSByZWFkLmNzdigibmV3X2N1c3RvbWVycy5jc3YiKQpgYGAKCiMgSW5zcGVjdCBEYXRhCk1ha2Ugc3VyZSB0aGF0IHZhcmlhYmxlcyBhcmUgZm9ybWF0dGVkIGFzIHRoZXkgc2hvdWxkIGJlLCBhbmQgaWYgbm90LCBhZGp1c3QgdmFyaWFibGUgdHlwZSBhY2NvcmRpbmdseS4gCgpgYGB7cn0KIyBpbnNwZWN0IGRhdGEgc3R1Y3R1cmUKc3RyKGFjdF9hY3Rpdml0eSkKYGBgCgpgYGB7cn0KIyBpbnNwZWN0IGRhdGEgc3R1Y3R1cmUKc3RyKGN1c3RfaW5mbykKYGBgCgpgYGB7cn0KIyBpbnNwZWN0IGRhdGEgc3R1Y3R1cmUKc3RyKG5ld19jdXN0KQpgYGAKCmBgYHtyfQojIGZpeCB2YXJpYWJsZSB0eXBlcyB3aGVyZSBuZWNlc3NhcnkKY3VzdF9pbmZvJENodXJuIDwtIGFzLmZhY3RvcihjdXN0X2luZm8kQ2h1cm4pCmxldmVscyhjdXN0X2luZm8kQ2h1cm4pIDwtIG1ha2UubmFtZXMoYygibm8iLCAieWVzIikpCmN1c3RfaW5mbyRTdGF0ZSA8LSBhcy5mYWN0b3IoY3VzdF9pbmZvJFN0YXRlKQpjdXN0X2luZm8kQXJlYV9Db2RlIDwtIGFzLmZhY3RvcihjdXN0X2luZm8kQXJlYV9Db2RlKQpgYGAKCmBgYHtyfQojIGNvdW50IHRoZSBudW1iZXIgb2Ygcm93cwpucm93KGFjdF9hY3Rpdml0eSkKYGBgCgpgYGB7cn0KIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3MKbnJvdyhjdXN0X2luZm8pCmBgYAoKYGBge3J9CiMgY291bnQgdGhlIG51bWJlciBvZiByb3dzCm5yb3cobmV3X2N1c3QpCmBgYAoKIyBSZW1vdmUgRHVwbGljYXRlcwoKYGBge3J9CiMgcmVtb3ZlIGNvbXBsZXRlIGNhc2UgZHVwbGljYXRlcwphY3RfYWN0aXZpdHkgPC0gdW5pcXVlKGFjdF9hY3Rpdml0eSkKY3VzdF9pbmZvIDwtIHVuaXF1ZShjdXN0X2luZm8pCm5ld19jdXN0IDwtIHVuaXF1ZShuZXdfY3VzdCkKYGBgCgpBZnRlciByZW1vdmluZyBkdXBsaWNhdGVzLCBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3MgYWdhaW4KCmBgYHtyfQojIGNvdW50IHRoZSBudW1iZXIgb2Ygcm93cwpucm93KGFjdF9hY3Rpdml0eSkKYGBgCgpgYGB7cn0KIyBjb3VudCB0aGUgbnVtYmVyIG9mIHJvd3MKbnJvdyhjdXN0X2luZm8pCmBgYAoKYGBge3J9CiMgY291bnQgdGhlIG51bWJlciBvZiByb3dzCm5yb3cobmV3X2N1c3QpCmBgYAoKIyBGZWF0dXJlIEVuZ2luZWVyaW5nCkluIHRoZSBleGlzdGluZyBkYXRhc2V0LCB0aGVyZSBpcyBubyB2YXJpYWJsZSBmb3IgdGhlIHRvdGFsIG51bWJlciBvZiBjYWxscyBtYWRlIHBlciBjdXN0b21lci4gIENyZWF0ZSBhIG5ldyB2YXJpYWJsZSB0aGUgc3VtcyB0aGUgbnVtYmVyIG9mIGRheSBjYWxscywgZXZlbmluZyBjYWxscywgYW5kIG5pZ2h0IGNhbGxzLiAKCmBgYHtyfQojIGNyZWF0ZSB0b3RhbF9jYWxscyBjYXJpYWJsZXMKYWN0X2FjdGl2aXR5JFRvdGFsX0NhbGxzIDwtIGFjdF9hY3Rpdml0eSREYXlfQ2FsbHMgKyBhY3RfYWN0aXZpdHkkRXZlX0NhbGxzICsgYWN0X2FjdGl2aXR5JE5pZ2h0X0NhbGxzICsgCmBgYAoKIyBNZXJnZSBEYXRhc2V0cwpUbyBpbmNsdWRlIGJvdGggYWNjb3VudCBhY3Rpdml0eSBhbmQgY3VzdG9tZXIgaW5mb3JtYXRpb24gaW4gdGhlIGRhdGFzZXQgdXNlZCBmb3IgcHJlZGljdGluZyBjdXN0b21lciBjaHVybiwgd2UgY2FuIGpvaW4gdGhlIGRhdGFzZXRzIGJhc2VkIG9uIEN1c3RvbWVyIElELiAKCmBgYHtyfQojIG1lcmdlIGFjY291bnQgYWN0aXZpdHkgd2l0aCBjdXN0b21lciBpbmZvcm1hdGlvbgpkZiA8LSBtZXJnZShhY3RfYWN0aXZpdHksIGN1c3RfaW5mbywgYnk9IkN1c3RvbWVyLklEIikKYGBgCgojIFBhcnRpdGlvbiBEYXRhCkJlZm9yZSBydW5uaW5nIGEgbW9kZWwsIHdlIHdpbGwgc3BsaXQgdGhlIGRhdGFzZXQgaW50byBhIHRyYWluaW5nIGRhdGFzZXQgYW5kIGEgdGVzdCBkYXRhc2V0LiBUaGUgdHJhaW5pbmcgZGF0YXNldCB3aWxsIGJlIHVzZWQgdG8gYnVpbGQgdGhlIG1vZGVsLCBhbmQgdGhlIHRlc3QgZGF0YXNldCB3aWxsIGJlIHVzZWQgdG8gZXZhbHVhdGUgdGhlIG1vZGVsLiAKCmBgYHtyfQojIGNyZWF0ZSBwYXJ0aXRpb24Kc2V0LnNlZWQoMTIzNCkKdHJhaW5JbmRleCA8LSBjcmVhdGVEYXRhUGFydGl0aW9uKGRmJENodXJuLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHAgPSAuNywgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBsaXN0ID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdGltZXMgPSAxKQoKIyBwdXQgZGF0YSBpbnRvIHRyYWluaW5nIGFuZCB0ZXN0CnRyYWluX2RmIDwtIGRmWyB0cmFpbkluZGV4LF0KdGVzdF9kZiAgPC0gZGZbLXRyYWluSW5kZXgsXQpgYGAKCldlIHdpbGwgaW5zcGVjdCB0aGUgcHJvcG9ydGlvbiBvZiBjaHVybmVkIGN1c3RvbWVycyBpbiB0aGUgdHJhaW5pbmcgYW5kIHRlc3QgZGF0YXNldHMgdG8gbWFrZSBzdXJlIHRoZXkgYXJlIHNpbWlsaWFyCgpgYGB7cn0KcHJvcC50YWJsZSh0YWJsZSh0cmFpbl9kZiRDaHVybikpCmBgYAoKYGBge3J9CnByb3AudGFibGUodGFibGUodGVzdF9kZiRDaHVybikpCmBgYAoKIyBGaXQgTW9kZWwgdG8gVHJhaW5pbmcgRGF0YQoKYGBge3J9CiMgc2V0IHVwIGNvbnRyb2wgZm9yIGNyb3NzLXZhbGlkYXRpb24KY3RybCA8LSB0cmFpbkNvbnRyb2wobWV0aG9kID0gInJlcGVhdGVkY3YiLCAKICAgICAgICAgICAgICAgICAgICAgcmVwZWF0cyA9IDUsCiAgICAgICAgICAgICAgICAgICAgIGNsYXNzUHJvYnMgPSBUUlVFLAogICAgICAgICAgICAgICAgICAgICBzdW1tYXJ5RnVuY3Rpb24gPSB0d29DbGFzc1N1bW1hcnkpCmBgYAoKYGBge3J9CiMgcnVuIGJhZ2dlZCBjbGFzc2lmaWNhdGlvbiBtb2RlbCB1c2luZyB0aGUgdHJhaW5pbmcgZGF0YQpzZXQuc2VlZCgxMjM0KQp0cmVlX2ZpdCA8LSB0cmFpbihDaHVybiB+IC4gLUN1c3RvbWVyLklEIC1QaG9uZSwKICAgICAgICAgICAgICAgICAgZGF0YSA9IHRyYWluX2RmLAogICAgICAgICAgICAgICAgICBtZXRob2QgPSAidHJlZWJhZyIsCiAgICAgICAgICAgICAgICAgIG5iYWdnID0gNTAsCiAgICAgICAgICAgICAgICAgIG1ldHJpYyA9ICJST0MiLAogICAgICAgICAgICAgICAgICBwcmVQcm9jID0gYygiY2VudGVyIiwgInNjYWxlIiksCiAgICAgICAgICAgICAgICAgIHRyQ29udHJvbCA9IGN0cmwpCmBgYAoKYGBge3J9CiMgc2hvdyB0aGUgcmVzdWx0cyBvZiB0aGUgbW9kZWwKdHJlZV9maXQKYGBgCgpgYGB7cn0KIyBmaXQgbW9kZWwgdG8gdHJhaW5pbmcgZGF0YQp0cmVlX3RyYWluIDwtIHByZWRpY3QodHJlZV9maXQsIG5ld2RhdGEgPSB0cmFpbl9kZiwgdHlwZSA9ICJwcm9iIikKYGBgCgpgYGB7cn0KIyBzZXQgY3V0LW9mZiB2YWx1ZSBmb3IgY2h1cm4KdHJlZV90cmFpbiRwcmVkIDwtIGZhY3RvcihpZmVsc2UodHJlZV90cmFpbiR5ZXMgPj0gMC40NSwgInllcyIsICJubyIpKQp0cmVlX3RyYWluIDwtIGNiaW5kKHRyZWVfdHJhaW4sIGFjdHVhbCA9IHRyYWluX2RmJENodXJuKQpgYGAKCmBgYHtyfQojIHJldmlldyBwZXJmb3JtYW5jZSBvZiBtb2RlbCBvbiB0cmFpbmluZyBkYXRhCmNvbmZ1c2lvbk1hdHJpeChkYXRhID0gdHJlZV90cmFpbiRwcmVkLCByZWZlcmVuY2UgPSB0cmVlX3RyYWluJGFjdHVhbCwgcG9zaXRpdmUgPSAneWVzJykKYGBgCgpgYGB7cn0KIyBwbG90IHRoZSBwb3N0ZXJpb3IgcHJvYmFiaWxpdHkgdnMgYWN0dWFsCmdncGxvdChkYXRhID0gdHJlZV90cmFpbikgKwogIGdlb21fcG9pbnQobWFwcGluZyA9IGFlcyh4ID0geWVzLCB5ID0gYWN0dWFsLCBjb2xvciA9IHByZWQpLCBwb3NpdGlvbiA9IHBvc2l0aW9uX2ppdHRlcih3ID0gMCwgaCA9IDAuMjUpKSArCiAgZ2d0aXRsZSgiUHJlZGljdGVkIFByb2JhYmlsaXR5IG9mIENodXJuIHZzLiBBY3R1YWwgQ2h1cm4gU3RhdHVzIikgKyAKICB0aGVtZShwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGxpbmVoZWlnaHQ9LjgsIGZhY2U9ImJvbGQiLCBoanVzdCA9IDAuNSksICkgKwogIGxhYnMoeCA9ICJQcmVkaWN0ZWQgUHJvYmFiaWxpdHkgb2YgQ2h1cm4iLCB5ID0gIkFjdHVhbCBDaHVybiBTdGF0dXMiKSArCiAgdGhlbWUobGVnZW5kLnRpdGxlID0gZWxlbWVudF90ZXh0KGZhY2U9ImJvbGQiKSwgbGVnZW5kLnBvc2l0aW9uID0gInJpZ2h0IikgKwogIHNjYWxlX2NvbG9yX21hbnVhbChuYW1lID0gIlByZWRpY3RlZCBTdGF0dXMiLCB2YWx1ZXMgPSBjKCIjOTk5OTk5IiwgIiNDQzAwMDAiKSkKYGBgCgojIEZpdCBNb2RlbCB0byBUZXN0IERhdGEKCmBgYHtyfQojIGZpdCBtb2RlbCB0byB0ZXN0IGRhdGEKdHJlZV90ZXN0IDwtIHByZWRpY3QodHJlZV9maXQsIG5ld2RhdGEgPSB0ZXN0X2RmLCB0eXBlID0gInByb2IiKQpgYGAKCmBgYHtyfQojIHNldCBjdXQtb2ZmIHZhbHVlIGZvciBjaHVybgp0cmVlX3Rlc3QkcHJlZCA8LSBmYWN0b3IoaWZlbHNlKHRyZWVfdGVzdCR5ZXMgPj0gLjQ1LCAieWVzIiwgIm5vIikpCnRyZWVfdGVzdCA8LSBjYmluZCh0cmVlX3Rlc3QsIGFjdHVhbCA9IHRlc3RfZGYkQ2h1cm4pCmBgYAoKYGBge3J9CiMgcmV2aWV3IHBlcmZvcm1hbmNlIG9mIG1vZGVsIG9uIHRlc3QgZGF0YQpjb25mdXNpb25NYXRyaXgoZGF0YSA9IHRyZWVfdGVzdCRwcmVkLCByZWZlcmVuY2UgPSB0cmVlX3Rlc3QkYWN0dWFsLCBwb3NpdGl2ZSA9ICd5ZXMnKQpgYGAKCmBgYHtyfQojIHBsb3QgdGhlIHBvc3RlcmlvciBwcm9iYWJpbGl0eSB2cyBhY3R1YWwKZ2dwbG90KGRhdGEgPSB0cmVlX3Rlc3QpICsKICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IHllcywgeSA9IGFjdHVhbCwgY29sb3IgPSBwcmVkKSwgcG9zaXRpb24gPSBwb3NpdGlvbl9qaXR0ZXIodyA9IDAsIGggPSAwLjI1KSkgKwogIGdndGl0bGUoIlByZWRpY3RlZCBQcm9iYWJpbGl0eSBvZiBDaHVybiB2cy4gQWN0dWFsIENodXJuIFN0YXR1cyIpICsgCiAgdGhlbWUocGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChsaW5laGVpZ2h0PS44LCBmYWNlPSJib2xkIiwgaGp1c3QgPSAwLjUpLCApICsKICBsYWJzKHggPSAiUHJlZGljdGVkIFByb2JhYmlsaXR5IG9mIENodXJuIiwgeSA9ICJBY3R1YWwgQ2h1cm4gU3RhdHVzIikgKwogIHRoZW1lKGxlZ2VuZC50aXRsZSA9IGVsZW1lbnRfdGV4dChmYWNlPSJib2xkIiksIGxlZ2VuZC5wb3NpdGlvbiA9ICJyaWdodCIpICsKICBzY2FsZV9jb2xvcl9tYW51YWwobmFtZSA9ICJQcmVkaWN0ZWQgU3RhdHVzIiwgdmFsdWVzID0gYygiIzk5OTk5OSIsICIjQ0MwMDAwIikpCmBgYAoKIyBJZGVudGlmeSBWYXJpYWJsZSBJbXBvcnRhbmNlClZhcmlhYmxlIGltcG9ydGFuY2UgbWVhc3VyZXMgdGhlIGFtb3VudCBvZiBkZWNyZWFzZSBpbiBhY2N1cmFjeSBvZiB0aGUgbW9kZWwgd2hlbiBlYWNoIHZhcmlhYmxlIGlzIHJlbW92ZWQgZnJvbSB0aGUgbW9kZWwuCgpgYGB7cn0KIyBwbG90IHZhcmlhYmxlIGltcG9ydGFuY2UKcGxvdCh2YXJJbXAodHJlZV9maXQpLCB0b3A9MjApCmBgYAo=</div>
 
 
 

@@ -1,14 +1,16 @@
 ---
-title: "R Notebook"
+title: "Predicting Loan Acceptance"
+author: "Curtis L. Hampton"
+date: "November 11th, 2017"
 output: html_notebook
 ---
 
 ```{r}
 # load packages
-library("ggplot2")
-library("caret")
-library("pROC")
-library("ROCR")
+library(ggplot2)
+library(caret)
+library(pROC)
+library(ROCR)
 ```
 
 ```{r}

@@ -1,5 +1,6 @@
 ---
-title: "R Notebook"
+title: "What's the temperature inside my apartment?"
+author: "Curtis L. Hampton"
 output: html_notebook
 ---
 
@@ -17,7 +18,9 @@ con <- dbConnect(dbDriver("PostgreSQL"),
                  port = 5432,
                  user = "postgres", 
                  password = "apassword")
+```
 
+```{r}
 # get the hourly weather for Arlington
 query = "SELECT date_trunc('hour', a.datetime) as datetime, 
                 ROUND(AVG((a.weather -> 'current_observation' ->> 'temp_f')::numeric), 1) AS outside_temp,
@@ -33,6 +36,11 @@ df <- dbGetQuery(con, query)
 
 # disconnect from the database
 dbDisconnect(con)
+```
+
+```{r}
+# show the first 5 observations
+head(df)
 ```
 
 ```{r}
@@ -58,7 +66,3 @@ ggplot(data=df.long, aes(x=datetime, y=value, color=variable)) +
         )
 ```
 
-```{r}
-# show the last 5 observations
-tail(df)
-```

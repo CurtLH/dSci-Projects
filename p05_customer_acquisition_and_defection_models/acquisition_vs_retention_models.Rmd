@@ -4,10 +4,6 @@ author: "Curtis L. Hampton"
 output: html_notebook
 ---
 
-DATA MANAGEMENT
-=======
-
-### Configure Enviornment
 ```{r, warning=FALSE}
 library(ggplot2)
 library(survival)
@@ -15,55 +11,70 @@ library(corrplot)
 library(car)
 ```
 
-### Load Data
+# Load Data
 ```{r}
 # read data
 df <- read.csv("Acquisition and Defection Data.csv")
+```
 
+```{r}
 # show the structure of the data
 str(df)
+```
 
+```{r}
 # convert variables to factors
 cols <- c("Acquisition", "Retention", "Industry")
 df[cols] <- lapply(df[cols], factor)
+```
 
+```{r}
 # create variable names
 levels(df$Acquisition) <- make.names(c("No", "Yes"))
 levels(df$Retention) <- make.names(c("No", "Yes"))
 levels(df$Industry) <- make.names(c("No", "Yes"))
+```
 
+```{r}
 # delete X column from df
 df$X <- NULL
+```
 
+```{r}
 # show sample of the data
 head(df)
 ```
 
-QUESTION 1:  ACQUISTION MODELING
-=======
+# ACQUISTION MODELING
 Understanding Acquisition: In this first analysis, develop an acquisition model (acquired or not) based upon the following variables: a) acquisition expense, b) Industry, c) Firm revenue and d) Firm employees. Give a basic assessment of the predictive ability of your model and then provide a brief overview of the factors influencing successful acquisition. Since the number of predictor variables is limited, be sure to explore non-linear and/or interaction/moderating effects where possible.
 
-### Logistic model:
+## Logistic Model
 ```{r}
 # fit inital logstic regression model to predict acquisition
 acq_glm_fit <- glm(Acquisition ~ Acq_Expense + Industry + Revenue + Employees,
                    data = df, 
                    family = binomial(link = "logit"))
+```
 
+```{r}
 # fit just the intercept model
 int_fit <- glm(Acquisition ~ 1,
                data = df, 
                family = binomial(link = "logit"))
+```
 
+```{r}
 # show the results of the model
 summary(acq_glm_fit)
 ```
 
-### Check Scatterplot Correlations:
+## Check Scatterplot Correlations
 ```{r}
 # subset dataframe to only continuous variables
 cont_vars <- df[c("Acq_Expense", "Revenue", "Employees")]
+```
 
+```{r}
 # create function to provide correlations
 panel.cor <- function(x, y, digits = 2, cex.cor, ...)
 {
@@ -82,11 +93,14 @@ panel.cor <- function(x, y, digits = 2, cex.cor, ...)
   if(p<0.01) txt2 <- paste("p= ", "<0.01", sep = "")
   text(0.5, 0.4, txt2)
 }
+```
 
+```{r}
 # create scatterplots and correlations
 pairs(cont_vars, upper.panel = panel.cor)
 ```
 
+## Inspect Model Fit
 ```{r}
 # show VIF for model
 vif(acq_glm_fit)
@@ -97,26 +111,27 @@ vif(acq_glm_fit)
 anova(int_fit,acq_glm_fit,test="LRT")
 ```
 
-
-
-QUESTION 2:  CHURN MODELING
-=======
+# CHURN MODELING
 Modeling Defection: The next step is to model the defection/retention process for those 292 customers which were acquired. In doing so, utilize two different techniques: logistic regression and survival analysis. You may employ any of the variables you feel appropriate in either or both models. Again, alternative expressions of the variables may be useful. Also, can information from the acquisition model be incorporated
 
-### Number of Acquired Customers
+## Number of Acquired Customers
 ```{r}
 # number of potential customers vs acquired
 table(df$Acquisition)
 ```
 
-### Customer Lifetime Value vs. Rentention:
+## Customer Lifetime Value vs. Rentention
 ```{r}
 # subset dataset into acquired customers
 cust_acq <- df[df$Acquisition == "Yes", ]
+```
 
+```{r}
 # sort df by Future_CLV
 cust_acq <- cust_acq[order(cust_acq$Future_CLV),]
+```
 
+```{r}
 # plot FutureCLV by Retention
 ggplot(data = cust_acq) +
   geom_point(mapping = aes(x = seq(1, length(cust_acq$Future_CLV)), y = Future_CLV, color = Retention)) + 
@@ -126,11 +141,13 @@ ggplot(data = cust_acq) +
   theme(legend.position = c(0.1, 0.85))
 ```
 
-### Duration vs. Retention:
+## Duration vs. Retention
 ```{r}
 # sort df by Duration
 cust_acq <- cust_acq[order(cust_acq$Duration),]
+```
 
+```{r}
 # plot Duration by Retention
 ggplot(data = cust_acq) +
   geom_point(mapping = aes(x = seq(1, length(cust_acq$Duration)), y = Duration, color = Retention)) + 
@@ -140,13 +157,15 @@ ggplot(data = cust_acq) +
   theme(legend.position = c(0.1, 0.85))
 ```
 
-### Logistic Model:
+## Logistic Model
 ```{r}
 # fit inital logstic regression model to predict churn without Future_CLV or Duration
 churn_glm_fit <- glm(Retention ~ First_Purchase + Acq_Expense + Ret_Expense + Industry + Revenue + Employees + Breadth + Frequency,
                      data = cust_acq, 
                      family = binomial(link = "logit"))
+```
 
+```{r}
 # show the results of the model
 summary(churn_glm_fit)
 ```
@@ -156,11 +175,13 @@ summary(churn_glm_fit)
 vif(churn_glm_fit)
 ```
 
-### Check Scatterplot Correlations:
+## Check Scatterplot Correlations
 ```{r}
 # subset dataframe to only continuous variables
 cont_vars <- cust_acq[c("First_Purchase", "Acq_Expense", "Ret_Expense", "Revenue", "Employees", "Breadth", "Frequency")]
+```
 
+```{r}
 # create scatterplots and correlations
 pairs(cont_vars, upper.panel = panel.cor)
 ```
@@ -170,20 +191,25 @@ pairs(cont_vars, upper.panel = panel.cor)
 churn_glm_fit1 <- glm(Retention ~ First_Purchase + Ret_Expense + Industry + Revenue + Employees + Breadth + Frequency,
                       data = cust_acq, 
                       family = binomial(link = "logit"))
+```
 
+```{r}
 # show the results of the model
 summary(churn_glm_fit1)
 ```
+
 ```{r}
 # show VIF for model
 vif(churn_glm_fit1)
 ```
 
-### Check Scatterplot Correlations:
+### Check Scatterplot Correlations
 ```{r}
 # subset dataframe to only continuous variables
 cont_vars <- cust_acq[c("First_Purchase", "Ret_Expense", "Revenue", "Employees", "Breadth", "Frequency")]
+```
 
+```{r}
 # create scatterplots and correlations
 pairs(cont_vars, upper.panel = panel.cor)
 ```
@@ -193,7 +219,9 @@ pairs(cont_vars, upper.panel = panel.cor)
 churn_glm_fit2 <- glm(Retention ~ Ret_Expense + Industry + Revenue + Employees + Breadth + Frequency,
                       data = cust_acq, 
                       family = binomial(link = "logit"))
+```
 
+```{r}
 # show the results of the model
 summary(churn_glm_fit2)
 ```
@@ -203,24 +231,30 @@ summary(churn_glm_fit2)
 vif(churn_glm_fit2)
 ```
 
-### Check Scatterplot Correlations:
+## Check Scatterplot Correlations
 ```{r}
 # subset dataframe to only continuous variables
 cont_vars <- cust_acq[c("Ret_Expense", "Revenue", "Employees", "Breadth", "Frequency")]
+```
 
+```{r}
 # create scatterplots and correlations
 pairs(cont_vars, upper.panel = panel.cor)
 ```
 
-### Survival Analysis
+# Survival Analysis
 ```{r}
 # create a "survival object" for each observation, using time and churn data.
 cust_acq$survival <- Surv(cust_acq$Duration, cust_acq$Retention == "No")
+```
 
+```{r}
 # fit a basic survival curve using the data
 fit <- survfit(survival ~ 1, data = cust_acq)
+```
 
-# Plot the survival curve and add a title!
+```{r}
+# plot the survival curve and add a title!
 plot(fit, lty = 1, mark.time = FALSE, ylim=c(.75,1), xlab = 'Days since Subscribing', ylab = 'Percent Surviving')
 ```
 
@@ -228,26 +262,9 @@ plot(fit, lty = 1, mark.time = FALSE, ylim=c(.75,1), xlab = 'Days since Subscrib
 # fit Cox Proportional Hazard Model
 churn_coxph <- coxph(survival ~ Ret_Expense + Industry + Revenue + Employees + Breadth + Frequency,
                      data = cust_acq)
+```
 
+```{r}
 # show the results of the model
 summary(churn_coxph)
 ```
-
-
-QUESTION 3:  CHURN MODEL COMPARISON
-=======
-Compare Defection Models: The two methods (logistic regression and survival analysis) provide different insights into the defection/churn process. Detail what is consistent between the two models and then what unique insights each technique offers the manager.
-
-```{r}
-
-```
-
-
-QUESTION 4:  ACQUISTION MODEL V. CHURN MODEL COMPARISON
-=======
-Compare Acquisition versus Defection Models: As a final comparison, detail what are the similarities versus differences in the factors (and their relative impact) that influence acquisition versus defection. If you were to consult with the managers on developing an integrated and comprehensive strategy, which variables would be included.
-
-```{r}
-
-```
-

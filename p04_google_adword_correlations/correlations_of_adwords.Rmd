@@ -1,0 +1,67 @@
+---
+title: "Google AdWord Correlations"
+author: "Curtis L. Hampton"
+output: html_notebook
+---
+
+```{r}
+library(corrplot)
+```
+
+```{r}
+# read CSV file into a dataframe
+ads <- read.csv("AdWords_Clean.csv")
+```
+
+```{r}
+# inspect the sturcture of the dataset
+str(ads)
+```
+
+```{r}
+# drop non-relevant columns
+ads$Full_description <- NULL
+ads$Description <- NULL
+ads$Ad_group <- NULL
+ads$Description_line_2 <- NULL
+ads$Description_line_1 <- NULL
+ads$Ad_ID <- NULL
+ads$Description_words <- NULL
+ads$Ad_state <- NULL
+```
+
+```{r}
+# summarize relevant metric data data
+lapply(list(ads$Conv_rate, ads$Bounce_rate, ads$CTR, ads$Description_Length), FUN=summary)
+```
+
+```{r}
+# sort the dataframe by conversion rate
+ads <- ads[order(-ads$Conv_rate), ]
+```
+
+```{r{}}
+# show the first 5 observations
+head(ads)
+```
+
+```{r}
+# show the bivariate correlation matrix
+m <- cor(ads)
+corrplot(m, method="shade", type="upper", diag=FALSE)
+```
+
+```{r}
+# correlate CTR with all other variables
+barplot(cor(ads$CTR, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Click Through Rate (CTR) Correlations")
+```
+
+```{r}
+# correlate Bounce Rate with all other variables
+barplot(cor(ads$Bounce_rate, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Bounce Rate Correlations")
+```
+
+```{r}
+# correlate Conversion Rate with all other variables
+barplot(cor(ads$Conv_rate, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Conversion Rate Correlations")
+```

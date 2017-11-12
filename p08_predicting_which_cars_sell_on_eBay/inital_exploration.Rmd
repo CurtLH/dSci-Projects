@@ -1,11 +1,9 @@
 ---
-title: "R Notebook"
-output:
-  html_document: default
-  html_notebook: default
+title: "Camaros on eBay!: Initial Exploration"
+author: "Curtis L. Hampton"
+date: "August 21, 2017"
+output: html_notebook
 ---
-
-Explore data related to whether or not a Camaro sells on eBay!
 
 ```{r message=FALSE}
 library(RPostgreSQL)
@@ -51,10 +49,14 @@ df  <-  df_all[, c('itemid',
                    'trans', 
                    'status', 
                    'endtime')]
+```
 
+```{r}
 # change status to 1/0, where 1 = EndedWithSales
 df$status <- ifelse(df$status == 'EndedWithSales', 1, 0)
+```
 
+```{r}
 # set variables type accordingly
 df$price <-  as.numeric(df$price)
 df$year <- as.factor(df$year)
@@ -66,17 +68,23 @@ df$MONTH <- factor(month(df$endtime, label = TRUE))
 df$WEEKDAY <- factor(wday(df$endtime, label = TRUE))
 df$HOUR <- factor(hour(df$endtime))
 df$endtime <- NULL
+```
 
+```{r}
 # create variable names for status
 levels(df$year) <- make.names(levels(factor(df$year)))
 levels(df$condition) <- make.names(levels(factor(df$condition)))
 levels(df$cyl) <- make.names(levels(factor(df$cyl)))
 levels(df$trans) <- make.names(levels(factor(df$trans)))
 levels(df$status) <- make.names(c("notSold", "sold"))
+```
 
+```{r}
 # drop records that contain a NA anywhere
 df <- df[complete.cases(df),]
+```
 
+```{r}
 # show sample of dataframe
 head(df)
 ```

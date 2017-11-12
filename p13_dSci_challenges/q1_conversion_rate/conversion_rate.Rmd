@@ -209,11 +209,6 @@ ggplot(data = rpart_test) +
 plot(varImp(rpart_fit))
 ```
 
-
-
-
-
-
 Conclusion:
 - China has the lowest conversion rate. Maybe this is due to translation issues with the Chinese version of the website. 
 - The younger users have a higher conversion rate than the older user. Maybe this is because the product appeals to younger users more than older users. Alternatively, maybe it's because older users are less likely to purchase over the internet, and they are calling in to place their order instead.
