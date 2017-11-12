@@ -32,10 +32,7 @@ query = "SELECT datetime,
                 (condition -> 'current_observation' ->> 'pressure_in')::numeric as pressure_in,
                 (condition -> 'current_observation' ->> 'wind_string')::text as wind_string,
                 (condition -> 'current_observation' ->> 'windchill_f')::text as windchill_f,
-                (condition -> 'current_observation' ->> 'visibility_mi')::numeric as visibility_mi,
-                (condition -> 'current_observation' ->> 'wind_gust_mph')::numeric as wind_gust_mpg,
-                (condition -> 'current_observation' ->> 'solarradiation')::numeric as solarradiation,
-                (condition -> 'current_observation' ->> 'relative_humidity')::text as relative_humidity
+                (condition -> 'current_observation' ->> 'wind_gust_mph')::numeric as wind_gust_mpg
          FROM arlington_weather_condition
         "
 
@@ -57,11 +54,6 @@ df$weather <- factor(df$weather, levels=c("Clear", "Overcast", "Partly Cloudy", 
 ```
 
 ```{r}
-# convert humidity to a numeric
-df$relative_humidity <- as.numeric(sub("%","",df$relative_humidity))/100
-```
-
-```{r}
 # check the structure of the data
 str(df)
 ```
@@ -69,8 +61,8 @@ str(df)
 ```{r}
 # plot temperatures over time
 ggplot(data=df, aes(x=datetime, y=temp_f)) +
-  geom_line(size=1.0) +
-  geom_point(size=2.0) +
+  geom_line(size=0.5) +
+  geom_point(size=1.0) +
   ggtitle('Temperature')
 ```
 
@@ -82,17 +74,10 @@ ggplot(data = df, mapping = aes(x = weather)) +
 ```
 
 ```{r}
-# plot humidity over time
-ggplot(data=df, aes(x=datetime, y=relative_humidity)) +
-  geom_line(size=1.0) +
-  geom_point(size=1.5) +
-  ggtitle("Relative Humidity")
+# plot pressure over time
+ggplot(data=df, aes(x=datetime, y=pressure_in)) +
+  geom_line(size=0.5) +
+  geom_point(size=1.0) +
+  ggtitle("Pressure")
 ```
 
-```{r}
-# plot visibility over time
-ggplot(data=df, aes(x=datetime, y=visibility_mi)) +
-  geom_line() +
-  geom_point() +
-  ggtitle("Visibility")
-```

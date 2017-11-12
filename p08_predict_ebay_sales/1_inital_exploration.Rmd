@@ -24,7 +24,11 @@ con <- dbConnect(dbDriver("PostgreSQL"),
 dbExistsTable(con, "ebay_merged")
 
 # only look at cars with a clear title
-query = "SELECT * FROM ebay_merged WHERE title = 'clear'"
+query = "SELECT * 
+         FROM ebay_merged 
+         WHERE year >= 2016 
+           AND year <= 2018
+           AND title = 'clear'"
 
 # store query results in a dataframe
 df_all <- dbGetQuery(con, query)
@@ -84,6 +88,8 @@ levels(df$status) <- make.names(c("notSold", "sold"))
 df <- df[complete.cases(df),]
 ```
 
+
+
 ```{r}
 # show sample of dataframe
 head(df)
@@ -98,10 +104,7 @@ ggplot(data = df, mapping = aes(x = year)) +
     theme(plot.title = element_text(lineheight=.8, face="bold", hjust = 0.5))
 ```
 
-```{r}
-# filter dataset to only include 6th generation Camaros (2016-2018)
-df <- df[df$year == "X2016" | df$year == "X2017" | df$year == "X2018", ]
-```
+
 
 ```{r}
 # plot differences in ending price for not sold vs sold

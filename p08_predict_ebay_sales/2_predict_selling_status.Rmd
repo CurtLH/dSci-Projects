@@ -37,22 +37,28 @@ dbDisconnect(con)
 ```
 
 ```{r}
+# show how many have sold
+table(df6gen$status)
+```
+
+
+```{r}
 # inspect the structure of data
 str(df6gen)
 ```
 
 ```{r}
-# subset the df6gen to only inlucde the columns of interest
-df6gen  <-  df6gen_all[, c('itemid', 
-                   'price', 
-                   'year', 
-                   'mileage', 
-                   'condition', 
-                   'cyl', 
-                   'trans', 
-                   'status', 
-                   'endtime')]
+# drop unneeded columns
+df6gen$MONTH <- NULL
+df6gen$WEEKDAY <- NULL
+df6gen$HOUR <- NULL
 ```
+
+```{r}
+# get the unique values for status
+unique(df6gen$status)
+```
+
 
 ```{r}
 # change status to 1/0, where 1 = EndedWithSales
@@ -63,14 +69,10 @@ df6gen$status <- ifelse(df6gen$status == 'sold', 1, 0)
 # set variables type accordingly
 df6gen$price <-  as.numeric(df6gen$price)
 df6gen$year <- as.factor(df6gen$year)
-df6gen$condition <- factor(df6gen$condition, levels=c("Used", "Certified pre-owned", "New"), ordered=FALSE)
+df6gen$condition <- factor(df6gen$condition, levels=c("Used", "New"), ordered=FALSE)
 df6gen$cyl <- as.factor(df6gen$cyl)
 df6gen$trans <- as.factor(df6gen$trans)
 df6gen$status <- as.factor(df6gen$status)
-df6gen$MONTH <- factor(month(df6gen$endtime), levels=seq(1, 12))
-df6gen$WDAY <- factor(wday(df6gen$endtime))
-df6gen$HOUR <- factor(hour(df6gen$endtime))
-df6gen$endtime <- NULL
 ```
 
 ```{r}
@@ -147,7 +149,7 @@ set.seed(1234)
 treebag_fit <- train(status ~ . -itemid, 
                      data = up_train,
                      method = "treebag",
-                     nbagg = 100,
+                     nbagg = 10,
                      metric = "ROC",
                      preProc = c("range"),
                      trControl = fitControl, 

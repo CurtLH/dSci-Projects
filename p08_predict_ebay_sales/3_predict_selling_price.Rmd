@@ -57,7 +57,7 @@ df  <-  df_all[, c('itemid',
 # set variables type accordingly
 df$price <-  as.numeric(df$price)
 df$year <- as.factor(df$year)
-df$condition <- factor(df$condition, levels=c("Used", "Certified pre-owned", "New"), ordered=FALSE)
+df$condition <- factor(df$condition, levels=c("Used", "New"), ordered=FALSE)
 df$cyl <- as.factor(df$cyl)
 df$trans <- as.factor(df$trans)
 df$trim <- as.factor(df$trim)

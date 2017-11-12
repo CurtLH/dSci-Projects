@@ -14,7 +14,7 @@ library(car)
 # Load Data
 ```{r}
 # read data
-df <- read.csv("Acquisition and Defection Data.csv")
+df <- read.csv("acquisition_and_defection_data.csv")
 ```
 
 ```{r}

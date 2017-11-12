@@ -10,7 +10,7 @@ library(corrplot)
 
 ```{r}
 # read CSV file into a dataframe
-ads <- read.csv("AdWords_Clean.csv")
+ads <- read.csv("adwords_clean_31oct2015_31oct2016.csv", stringsAsFactors = FALSE)
 ```
 
 ```{r}
@@ -20,27 +20,28 @@ str(ads)
 
 ```{r}
 # drop non-relevant columns
-ads$Full_description <- NULL
-ads$Description <- NULL
-ads$Ad_group <- NULL
-ads$Description_line_2 <- NULL
-ads$Description_line_1 <- NULL
-ads$Ad_ID <- NULL
-ads$Description_words <- NULL
-ads$Ad_state <- NULL
+ads$full_description <- NULL
+ads$description <- NULL
+ads$ad_group <- NULL
+ads$description_line_2 <- NULL
+ads$description_line_1 <- NULL
+ads$ad_id <- NULL
+ads$description.words <- NULL
+ads$ad_state <- NULL
+ads$clean_words <- NULL
 ```
 
 ```{r}
 # summarize relevant metric data data
-lapply(list(ads$Conv_rate, ads$Bounce_rate, ads$CTR, ads$Description_Length), FUN=summary)
+lapply(list(ads$conv_rate, ads$bounce_rate, ads$CTR, ads$description_length), FUN=summary)
 ```
 
 ```{r}
 # sort the dataframe by conversion rate
-ads <- ads[order(-ads$Conv_rate), ]
+ads <- ads[order(-ads$conv_rate), ]
 ```
 
-```{r{}}
+```{r}
 # show the first 5 observations
 head(ads)
 ```
@@ -58,10 +59,10 @@ barplot(cor(ads$CTR, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Clic
 
 ```{r}
 # correlate Bounce Rate with all other variables
-barplot(cor(ads$Bounce_rate, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Bounce Rate Correlations")
+barplot(cor(ads$bounce_rate, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Bounce Rate Correlations")
 ```
 
 ```{r}
 # correlate Conversion Rate with all other variables
-barplot(cor(ads$Conv_rate, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Conversion Rate Correlations")
+barplot(cor(ads$conv_rate, as.matrix(ads[sapply(ads, is.numeric)])), las=2, main="Conversion Rate Correlations")
 ```
