@@ -89,7 +89,7 @@ In the existing dataset, there is no variable for the total number of calls made
 
 ```{r}
 # create total_calls cariables
-act_activity$Total_Calls <- act_activity$Day_Calls + act_activity$Eve_Calls + act_activity$Night_Calls + 
+act_activity$Total_Calls <- act_activity$Day_Calls + act_activity$Eve_Calls + act_activity$Night_Calls
 ```
 
 # Merge Datasets
