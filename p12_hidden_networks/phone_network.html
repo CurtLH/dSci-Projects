@@ -108,7 +108,7 @@ svg.append("text")
     .style("opacity", 0.5)
     .text("Jaccard Similarity")
 
-d3.json("ad_data_name.json", function(error, graph) {
+d3.json("phone_similarity.json", function(error, graph) {
   if (error) throw error;
   
   graph.links.forEach(function(d,i){ d.i = i; });
