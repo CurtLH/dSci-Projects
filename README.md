@@ -26,6 +26,6 @@
   - [Connecting to the Database](https://github.com/CurtLH/dSci-Projects/blob/master/p12_hidden_networks/1_connecting_to_database_using_pandas.ipynbl)
   - [Inital Exploration](https://github.com/CurtLH/dSci-Projects/blob/master/p12_hidden_networks/2_inital_exploration.ipynb)
   - [Ad Similarity](https://github.com/CurtLH/dSci-Projects/blob/master/p12_hidden_networks/3_ad_similarity.ipynb)
-  - [Phone Network](https://curtlh.github.io/dSci-Projects/p12_hidden_networks/index.html)
+  - [Phone Network](https://curtlh.github.io/dSci-Projects/p12_hidden_networks/phone_network.html)
 - [Take Home Challenges](https://github.com/CurtLH/dSci-Projects/tree/master/p13_dSci_challenges)
   - [Predict Customer Conversion](https://curtlh.github.io/dSci-Projects/p13_dSci_challenges/q1_conversion_rate/conversion_rate.nb.html)
