@@ -52,6 +52,9 @@ Predict whether or not a car is going to sell.
 - [**Predict Selling Price:**](https://curtlh.github.io/dSci-Projects/p08_predict_ebay_sales/3_predict_selling_price.nb.html)
 Predict the final selling price of the car.
 
+#### [`buzz`](https://github.com/CurtLH/buzz)
+Conda package for Python that connects to the FAA Airport Status API.
+
 #### [`WQ`](https://github.com/CurtLH/WQ)
 Conda package for Python that connects to the Weather Underground API.
 
