@@ -55,6 +55,9 @@ coverage.xml
 *.mo
 *.pot
 
+# iPython Notebooks
+.ipynb_checkpoints
+
 # Django stuff:
 *.log
 
