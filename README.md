@@ -50,5 +50,5 @@ Collection of data science take-home challenges
 - [**Predict Customer Conversion:**](https://curtlh.github.io/dSci-Projects/p13_dSci_challenges/q1_conversion_rate/conversion_rate.nb.html)
 Predict which customers are going to convert and identify the factors related to conversion.
 
-#### [Grid Network](https://github.com/CurtLH/dSci-Projects/tree/master/p14_grid_network/igraph_example.nb.html)
+#### [Grid Network](https://curtlh.github.io/dSci-Projects/p14_grid_network/igraph_example.nb.html)
 Layout network in a grid format and adjust properties based on attributes.
