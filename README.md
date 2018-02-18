@@ -18,9 +18,6 @@ Identifying which keywords are most correlated with various key performance indi
 #### [Customer Acquisition and Defection](https://curtlh.github.io/dSci-Projects/p05_customer_acquisition_and_defection/acquisition_vs_retention_models.nb.html)
 Identifying the factors that drive customer acquisition and retention.
 
-#### [NetFlix Original Tweets](https://github.com/CurtLH/dSci-Projects/blob/master/p06_netflix_original_content/netflix_data_cleanup.ipynb)
-Cleaning up Twitter data to create a [dashboard](https://public.tableau.com/profile/curtis.h.#!/vizhome/NetflixonTwitter/Dashboard) to investigate tweets related to NetFlix original content. Data collected via [`tweeps`](https://github.com/CurtLH/tweeps)
-
 #### [Predict Machine Failure](https://github.com/CurtLH/dSci-Projects/tree/master/p07_predict_machine_failure)
 Can you identify indications of a potentional machine failure with enough time to do something before the failure occurs? tldr: Nope, not in this case.
 - [**Load Data:**](https://github.com/CurtLH/dSci-Projects/blob/master/p07_predict_machine_failure/1_load_data.ipynb)
