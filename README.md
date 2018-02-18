@@ -18,21 +18,6 @@ Identifying which keywords are most correlated with various key performance indi
 #### [Customer Acquisition and Defection](https://curtlh.github.io/dSci-Projects/p05_customer_acquisition_and_defection/acquisition_vs_retention_models.nb.html)
 Identifying the factors that drive customer acquisition and retention.
 
-#### [Predict Machine Failure](https://github.com/CurtLH/dSci-Projects/tree/master/p07_predict_machine_failure)
-Can you identify indications of a potentional machine failure with enough time to do something before the failure occurs? tldr: Nope, not in this case.
-- [**Load Data:**](https://github.com/CurtLH/dSci-Projects/blob/master/p07_predict_machine_failure/1_load_data.ipynb)
-Loading provided CSV files into a Postgres database.
-- [**Inspect Data:**](https://github.com/CurtLH/dSci-Projects/blob/master/p07_predict_machine_failure/2_inspect_data.ipynb)
-Explore datasets to better understand how the machine produces data.
-- [**Prepare Data:**](https://github.com/CurtLH/dSci-Projects/blob/master/p07_predict_machine_failure/3_prepare_data.ipynb)
-Aggregrate dataset from 2-minute intervals into 1-hour intervals and create an indicator of failure within the next hour.
-- [**Predict Failure:**](https://github.com/CurtLH/dSci-Projects/blob/master/p07_predict_machine_failure/4_predict_failure.ipynb)
-Predict whether or not the machine is going to fail within the next hour.
-- [**Predict Downtime:**](https://github.com/CurtLH/dSci-Projects/blob/master/p07_predict_machine_failure/5_predict_downtime.ipynb)
-Predict whether or not the machine is going to go down for any reason (maintance, failure, etc.) within the next hour.
-- [**Predict Time Until Downtime:**](https://github.com/CurtLH/dSci-Projects/blob/master/p07_predict_machine_failure/6_predict_time_until_down.ipynb)
-Predict the amount of time until the machine next goes down for any reason (maintenance, failure, etc.).
-
 #### [Apartment Temperature](https://curtlh.github.io/dSci-Projects/p09_apartment_temperatures/apartment_temperatures.nb.html)
 Comparing internal apartment temperatures to outside temperature. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
 
