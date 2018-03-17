@@ -34,3 +34,6 @@ Predict which customers are going to convert and identify the factors related to
 
 #### [Grid Network](https://curtlh.github.io/dSci-Projects/p14_grid_network/igraph_example.nb.html)
 Layout network in a grid format and adjust properties based on attributes.
+
+#### [MLB Data](https://github.com/CurtLH/dSci-Projects/tree/master/p15_mlb_stats)
+Collecting data about teams and players.
