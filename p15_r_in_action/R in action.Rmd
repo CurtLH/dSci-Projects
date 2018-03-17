@@ -1,0 +1,178 @@
+---
+title: 'R in Action: Data analysis and graphics with R'
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: console
+---
+
+# Chapter 4: Basic data management
+
+## 4.1 A working example
+```{r}
+manager <- c(1, 2, 3, 4, 5)
+date <- c("10/24/08", "10/28/08", "10/1/08", "10/12/08", "5/1/09")
+country <- c("US", "US", "UK", "UK", "UK")
+gender <- c("M", "F", "F", "M", "F")
+age <- c(32, 45, 25, 39, 99)
+q1 <- c(5, 3, 3, 3, 2)
+q2 <- c(4, 5, 5, 3, 2)
+q3 <- c(5, 2, 5, 4, 1)
+q4 <- c(5, 5, 5, NA, 2)
+q5 <- c(5, 5, 2, NA, 1)
+
+df <- data.frame(manager, date, country, gender, age, q1, q2, q3, q4, q5, stringsAsFactors=FALSE)
+```
+
+## 4.2 Creating new variables
+```{r}
+mydata <- data.frame(x1 = c(2, 2, 6, 4),
+                     x2 = c(3, 4, 2, 8))
+
+mydata$sumx <- mydata$x1 + mydata$x2
+```
+
+## 4.3 Recoding variables
+```{r}
+# set outlier to missing
+df$age[df$age == 99] <- NA
+
+# create new variables
+df$agecat[df$age > 75] <- "Elder"
+df$agecat[df$age >= 55 & df$age <= 75] <- "Middle Aged"
+df$agecat[df$age < 55] <- "Young"
+```
+
+## 4.4 Renaming variables
+```{r}
+# rename one variable by position
+names(df)[2] <- "testDate"
+
+# rename multiple variables by position
+names(df)[6:10] <- c("item1", "item2", "item3", "item4", "item5")
+
+# renaming variables by name
+library(plyr)
+df <- rename(df, c(manager="managerID", testDate="date"))
+```
+
+## 4.5 Missing values
+```{r}
+y <- c(1, 2, 3, NA)
+
+# test for the presence of missing values
+is.na(y)
+
+# recoding values to missing
+df$age[df$age == 99] <- NA
+
+# delete any rows with missing data
+new_df <- na.omit(df)
+```
+
+
+## 4.6 Date values
+```{r}
+# convert variable to date format
+df$date <- as.Date(df$date, "%m/%d/%y")
+
+# calculate number of days between two dates
+startdate <- as.Date("2004-02-13")
+enddate <- as.Date("2011-01-22")
+days <- enddate - startdate
+
+# calculate time intervals
+today <- Sys.Date()
+dob <- as.Date("1956-10-12")
+difftime(today, dob, units = "weeks")
+
+# convert dates to character variables
+dates <- c(as.Date("2008-02-13"), as.Date("2007-03-12"), as.Date("2009-07-20"))
+strDates <- as.character(dates)
+```
+
+## 4.7 Type conversions
+```{r}
+a <- c(1, 2, 3)
+
+# check if a is numeric
+is.numeric(a)
+
+# check if a is a vector
+is.vector(a)
+
+# convert a to character vector
+a <- as.character(a)
+
+# check if a is numeric
+is.numeric(a)
+
+# check if a is a vector
+is.vector(a)
+
+# check if a is character
+is.character(a)
+```
+
+## 4.8 Sorting data
+```{r}
+# sort by age in ascending order
+newdata <- df[order(df$age),]
+
+# sort by gender then age
+newdata <- df[order(df$gender, df$age), ]
+
+# sort by age in descending order
+newdata <- df[order(-df$age),]
+```
+
+## 4.9 Merging datesets
+```{r}
+# adding columns to a data frame
+# total <- merge(dataframeA, dataframeB, by="ID")
+# total <- merge(dataframeA, dataframeB, by=c("ID", "Country"))
+
+# joining two matrices or data frames with specifying a key
+# total <- cbind(A, B)
+
+# adding rows to a data frame
+# total <- rbind(dataframeA, dataframeB)
+```
+
+## 4.10 Subsetting datasets
+```{r}
+# selecting (keeping) variables by position
+newdata <- df[, c(6:10)]
+
+# selecting (keeping) variables by column name
+myvars <- c("item1", "item2", "item3", "item4", "item5")
+newdata <- df[myvars]
+
+# excluding (dropping) variables
+myvars <- names(leadership) %in% c("item3", "item4")
+newdata <- df[!myvars]
+
+# selecting the first 3 observations
+newdata <- df[1:3, ]
+
+# conditionally selecting observations
+newdata <- df[df$gender == "M" & df$age > 30, ]
+
+# using the subset() fuction to keep certain variables
+newdata <- subset(df, age >= 35 | age < 24, select = c("item1", "item2", "item3"))
+newdata <- subset(df, gender == "M" & age > 25, select = gender:item4)
+
+# selecting a random sample
+mysample <- df[sample(1:nrow(df), 3, replace = FALSE),]
+
+# using SQL statements
+library(sqldf)
+newdf <- sqldf("select * from mtcars where carb=1 order by mpg", row.names = TRUE)
+```
+
+# Chapter 4: Advanced data management
+
+
+
+

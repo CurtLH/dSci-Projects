@@ -69,3 +69,4 @@ target/
 
 # pyenv python configuration file
 .python-version
+.Rproj.user
