@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r}
+library(lubridate)
+library(ggplot2)
+library(corrplot)
+```
+
+```{r}
+# read in recent weather data
+df = read.csv("recent_weather.csv")
+
+# inspect the data types
+str(df)
+
+# rename observation_epoch to datetime and convert to datetime value
+df$datetime <- ymd_hms(df$observation_epoch)
+df$observation_epoch <- NULL
+
+# drop datetime for now
+df$datetime <- NULL
+
+# drop non-complete case data
+df <- na.omit(df)
+
+# look at the data
+head(df)
+```
+
+```{r}
+# plot boxplot to understand how temperature variables by weather
+ggplot(data = df, mapping = aes(x = weather, y = temp_f, color = weather)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
+```
+
+
+```{r}
+# look at correlations between variables
+df.num <- df[, sapply(df, is.numeric)]
+df.num.M = cor(df.num)
+corrplot(df.num.M, 
+         type = "upper", 
+         method = "number", 
+         number.cex = 0.7, 
+         tl.cex = 0.7, 
+         tl.col = "black")
+```
+
+```{r}
+# fit a multiple linear regression to predict temp_f
+fit <- lm(temp_f ~ . -weather -feelslike_f,
+          data = df)
+
+# inspect the fit
+summary(fit)
+```
+
+```{r}
+# evaluate assumptions
+plot(fit)
+```
+
+
+
