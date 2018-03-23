@@ -7,13 +7,13 @@ editor_options:
   chunk_output_type: inline
 ---
 
-```{r}
+```{r echo=FALSE, message=FALSE}
 library(lubridate)
 library(ggplot2)
 library(corrplot)
 ```
 
-```{r}
+```{r results=FALSE}
 # read in recent weather data
 df = read.csv("recent_weather.csv")
 
@@ -29,12 +29,14 @@ df$datetime <- NULL
 
 # drop non-complete case data
 df <- na.omit(df)
+```
 
+```{r}
 # look at the data
 head(df)
 ```
 
-```{r}
+```{r fig.align="center"}
 # plot boxplot to understand how temperature variables by weather
 ggplot(data = df, mapping = aes(x = weather, y = temp_f, color = weather)) +
   geom_boxplot() +
@@ -42,7 +44,7 @@ ggplot(data = df, mapping = aes(x = weather, y = temp_f, color = weather)) +
 ```
 
 
-```{r}
+```{r fig.align="center"}
 # look at correlations between variables
 df.num <- df[, sapply(df, is.numeric)]
 df.num.M = cor(df.num)
@@ -63,7 +65,7 @@ fit <- lm(temp_f ~ . -weather -feelslike_f,
 summary(fit)
 ```
 
-```{r}
+```{r fig.align="center"}
 # evaluate assumptions
 plot(fit)
 ```
