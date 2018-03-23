@@ -21,8 +21,11 @@ Identifying the factors that drive customer acquisition and retention.
 #### [Apartment Temperature](https://curtlh.github.io/dSci-Projects/p09_apartment_temperatures/apartment_temperatures.nb.html)
 Comparing internal apartment temperatures to outside temperature. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
 
-#### [Arlington Weather](https://curtlh.github.io/dSci-Projects/p10_arlington_weather/weather_conditions.nb.html)
+#### [Arlington Weather](https://curtlh.github.io/dSci-Projects/p10_arlington_weather)
 Investigating weather conditions in Arlington, Virginia over time. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
+- [**Prepare Data:**](https://github.com/CurtLH/dSci-Projects/blob/master/p10_arlington_weather/Arlington%20Weather.ipynb) Prepare source data to be anlayzed.
+- [**Understand Weather:**](https://curtlh.github.io/dSci-Projects/p10_arlington_weather/weather_conditions.html)
+- [**Predict Temperature:**](https://curtlh.github.io/dSci-Projects/p10_arlington_weather/predicting_temperature.html) Predicting current weather temperature based on other weather conditions.
 
 #### [Solar Eclipese Temperature](https://curtlh.github.io/dSci-Projects/p11_total_eclipse_temperatures/outside_temperatures.nb.html)
 Comparing outside air temperature between the day of the [Solar eclipse of 2017](https://en.wikipedia.org/wiki/Solar_eclipse_of_August_21,_2017) and the prior day. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
