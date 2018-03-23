@@ -3,17 +3,19 @@ title: "Predicting the Temperature"
 output:
   html_document:
     df_print: paged
+  pdf_document: default
 editor_options:
   chunk_output_type: inline
 ---
 
-```{r}
+```{r echo=FALSE, message=FALSE}
 library(lubridate)
+library(reshape)
 library(ggplot2)
 library(corrplot)
 ```
 
-```{r}
+```{r echo=FALSE, message=FALSE, results=FALSE}
 # read in recent weather data
 df = read.csv("recent_weather.csv")
 
@@ -25,24 +27,45 @@ df$datetime <- ymd_hms(df$observation_epoch)
 df$observation_epoch <- NULL
 
 # drop datetime for now
-df$datetime <- NULL
+#df$datetime <- NULL
 
 # drop non-complete case data
 df <- na.omit(df)
+```
 
+# Data
+
+```{r echo=TRUE}
 # look at the data
 head(df)
 ```
 
-```{r}
+# Inspection
+
+How does the actual temperature compare to what it "feels like"?
+
+```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}
+# reshape dataframe from wide to long
+df.temps <- df[c("temp_f", "feelslike_f", "datetime")]
+df.temps.long <- melt(df.temps, id=c("datetime"))
+
+# plot actual vs feeslikes temperatures
+ggplot(data = df.temps.long, mapping = aes(x = datetime, y = value, color = variable)) +
+  geom_line()
+```
+
+How does temperature vary by weather condition?
+
+```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}
 # plot boxplot to understand how temperature variables by weather
 ggplot(data = df, mapping = aes(x = weather, y = temp_f, color = weather)) +
   geom_boxplot() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
 ```
 
+How correlated are the variables to one another?  How correlated is each variable to the temperature?
 
-```{r}
+```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}
 # look at correlations between variables
 df.num <- df[, sapply(df, is.numeric)]
 df.num.M = cor(df.num)
@@ -54,16 +77,22 @@ corrplot(df.num.M,
          tl.col = "black")
 ```
 
+# Regression
+
+Predicting temperature using all variables except for "feelslike_f"
+
 ```{r}
 # fit a multiple linear regression to predict temp_f
-fit <- lm(temp_f ~ . -weather -feelslike_f,
+fit <- lm(temp_f ~ . -feelslike_f,
           data = df)
 
 # inspect the fit
 summary(fit)
 ```
 
-```{r}
+# Evaluate Model Fit
+
+```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}
 # evaluate assumptions
 plot(fit)
 ```
