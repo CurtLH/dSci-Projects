@@ -21,7 +21,7 @@ Identifying the factors that drive customer acquisition and retention.
 #### [Apartment Temperature](https://curtlh.github.io/dSci-Projects/p09_apartment_temperatures/apartment_temperatures.nb.html)
 Comparing internal apartment temperatures to outside temperature. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
 
-#### [Arlington Weather](https://curtlh.github.io/dSci-Projects/p10_arlington_weather)
+#### [Arlington Weather](https://github.com/CurtLH/dSci-Projects/tree/master/p10_arlington_weather)
 Investigating weather conditions in Arlington, Virginia over time. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
 - [**Prepare Data:**](https://github.com/CurtLH/dSci-Projects/blob/master/p10_arlington_weather/Arlington%20Weather.ipynb) Prepare source data to be anlayzed.
 - [**Investigate Weather:**](https://curtlh.github.io/dSci-Projects/p10_arlington_weather/investigate_weather.html) Investigate trends in current weather data. 
