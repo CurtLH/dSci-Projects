@@ -40,3 +40,11 @@ Layout network in a grid format and adjust properties based on attributes.
 
 #### [MLB Data](https://github.com/CurtLH/dSci-Projects/tree/master/p15_mlb_stats)
 Collecting data about teams and players.
+
+#### [Bikeshare vs. Weather](https://github.com/CurtLH/dSci-Projects/tree/master/p17_bikeshare)
+Investigating relationship between Bikeshare usage and weather conditions. Weather data collected via [`WQ`](https://github.com/CurtLH/WQ)
+
+- [**Get Bikeshare Data:**](https://github.com/CurtLH/dSci-Projects/blob/master/p17_bikeshare/get_bikeshare_data.ipynb) Load Bikeshare data into PostgreSQL database.
+- [**Merge Datasets:**](https://github.com/CurtLH/dSci-Projects/blob/master/p17_bikeshare/merge_bikeshare_and_weather_data.ipynb) Aggregrate Bikeshare and weather data.
+
+
