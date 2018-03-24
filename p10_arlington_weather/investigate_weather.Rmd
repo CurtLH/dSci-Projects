@@ -8,24 +8,37 @@ editor_options:
 ---
 
 ```{r echo=FALSE, message=FALSE}
+library(RPostgreSQL)
+library(plyr)
 library(lubridate)
 library(ggplot2)
 library(corrplot)
 ```
 
-```{r results=FALSE}
-# read in recent weather data
-df = read.csv("recent_weather.csv")
+```{r echo=FALSE, message=FALSE, results='hide'}
+# connect to the database
+con <- dbConnect(dbDriver("PostgreSQL"), 
+                 dbname = "postgres",
+                 host = "localhost", 
+                 port = 5432,
+                 user = "postgres", 
+                 password = "apassword")
+```
 
+```{r, echo=FALSE, message=FALSE}
+# get the weather for Arlington
+query1 = "SELECT * FROM arlington_weather_condition_2018"
+
+# store query results in a dataframe 
+df <- dbGetQuery(con, query1)
+```
+
+```{r echo=FALSE, results=FALSE}
 # inspect the data types
 str(df)
 
-# rename observation_epoch to datetime and convert to datetime value
-df$datetime <- ymd_hms(df$observation_epoch)
-df$observation_epoch <- NULL
-
-# drop datetime for now
-df$datetime <- NULL
+# rename observation_epoch to datetime
+df <- rename(df, c(observation_epoch="datetime"))
 
 # drop non-complete case data
 df <- na.omit(df)
@@ -69,6 +82,3 @@ summary(fit)
 # evaluate assumptions
 plot(fit)
 ```
-
-
-
