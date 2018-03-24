@@ -1,18 +1,15 @@
 ---
-title: "Predicting the Temperature"
+title: "Hows the weather out there?"
+author: "Curtis L. Hampton"
 output:
   html_document:
     df_print: paged
-editor_options:
-  chunk_output_type: inline
 ---
 
 ```{r echo=FALSE, message=FALSE}
 library(RPostgreSQL)
-library(plyr)
-library(lubridate)
+library(reshape2)
 library(ggplot2)
-library(corrplot)
 ```
 
 ```{r echo=FALSE, message=FALSE, results='hide'}
@@ -25,60 +22,52 @@ con <- dbConnect(dbDriver("PostgreSQL"),
                  password = "apassword")
 ```
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE, results=FALSE}
 # get the weather for Arlington
 query1 = "SELECT * FROM arlington_weather_condition_2018"
 
 # store query results in a dataframe 
 df <- dbGetQuery(con, query1)
-```
 
-```{r echo=FALSE, results=FALSE}
-# inspect the data types
-str(df)
-
-# rename observation_epoch to datetime
-df <- rename(df, c(observation_epoch="datetime"))
-
-# drop non-complete case data
-df <- na.omit(df)
+# disconnect from the database
+dbDisconnect(con)
 ```
 
 ```{r}
-# look at the data
+# show the first 5 observations
 head(df)
 ```
 
-```{r fig.align="center"}
-# plot boxplot to understand how temperature variables by weather
-ggplot(data = df, mapping = aes(x = weather, y = temp_f, color = weather)) +
-  geom_boxplot() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
-```
-
-
-```{r fig.align="center"}
-# look at correlations between variables
-df.num <- df[, sapply(df, is.numeric)]
-df.num.M = cor(df.num)
-corrplot(df.num.M, 
-         type = "upper", 
-         method = "number", 
-         number.cex = 0.7, 
-         tl.cex = 0.7, 
-         tl.col = "black")
+```{r}
+# convert weather to a factor
+df$weather <- factor(df$weather, levels=c("Clear", "Overcast", "Partly Cloudy", "Mostly Cloudy", "Light Rain", "Rain"), ordered=FALSE)
 ```
 
 ```{r}
-# fit a multiple linear regression to predict temp_f
-fit <- lm(temp_f ~ . -weather -feelslike_f,
-          data = df)
-
-# inspect the fit
-summary(fit)
+# check the structure of the data
+str(df)
 ```
 
 ```{r fig.align="center"}
-# evaluate assumptions
-plot(fit)
+# plot temperatures over time
+ggplot(data=df, aes(x=datetime, y=temp_f)) +
+  geom_line(size=0.5) +
+  geom_point(size=1.0) +
+  ggtitle('Temperature')
 ```
+
+```{r fig.align="center"}
+# plot the number of records by weather condition
+ggplot(data = df, mapping = aes(x = weather)) +
+  geom_bar(aes(fill = weather)) +
+  ggtitle("Weather conditions")
+```
+
+```{r fig.align="center"}
+# plot pressure over time
+ggplot(data=df, aes(x=datetime, y=pressure_in)) +
+  geom_line(size=0.5) +
+  geom_point(size=1.0) +
+  ggtitle("Pressure")
+```
+

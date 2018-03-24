@@ -32,14 +32,14 @@ query1 = "SELECT * FROM arlington_weather_condition_2018"
 
 # store query results in a dataframe 
 df <- dbGetQuery(con, query1)
+
+# disconnect from the database
+dbDisconnect(con)
 ```
 
 ```{r echo=FALSE, results=FALSE}
 # inspect the data types
 str(df)
-
-# rename observation_epoch to datetime
-df <- rename(df, c(observation_epoch="datetime"))
 
 # drop non-complete case data
 df <- na.omit(df)
