@@ -1,0 +1,96 @@
+---
+title: "Predicting the Number of Bikeshare Rides"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r echo=FALSE, message=FALSE}
+library(RPostgreSQL)
+library(corrplot)
+library(lubridate)
+library(chron)
+```
+
+```{r echo=FALSE, message=FALSE, results='hide'}
+# connect to the database
+con <- dbConnect(dbDriver("PostgreSQL"), 
+                 dbname = "postgres",
+                 host = "localhost", 
+                 port = 5432,
+                 user = "postgres", 
+                 password = "apassword")
+
+# get the bikeshare and weather data
+query1 = "SELECT * FROM bikeshare_weather"
+
+# store query results in a dataframe 
+df <- dbGetQuery(con, query1)
+
+# disconnect from the database
+dbDisconnect(con)
+```
+
+```{r echo=False, results=False}
+# inspect the data
+str(df)
+```
+
+# Data
+
+```{r, echo=False}
+# print a sample of the data
+head(df)
+```
+
+```{r}
+# create a variable for weekend/non-weekend
+df$weekend <- is.weekend(df$date)
+
+# create a new variable for percent of rides that are membership
+df$member_percent = df$Member / df$num_rides
+
+# drop old variables
+df$Member <- NULL
+df$Casual <- NULL
+```
+
+
+# Correlations
+
+Analyze correlations between numeric variables
+
+```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}}
+# inspect correlations between variables
+df.num <- df[, sapply(df, is.numeric)]
+df.num.M <- cor(df.num)
+corrplot.mixed(df.num.M, 
+               lower.col = "black", 
+               number.cex = 0.7,
+               tl.cex = 0.7)
+```
+
+# Regression
+
+Predict number of rides based on all variables
+
+```{r}
+# fit linear regression model
+fit <- lm(num_rides ~ . -date,
+          data = df)
+
+# inspect model results
+summary(fit)
+```
+
+Assess model fit
+
+```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}
+# evaluate assumptions
+plot(fit)
+```
+```
+
