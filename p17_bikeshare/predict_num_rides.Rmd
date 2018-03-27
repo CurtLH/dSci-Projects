@@ -34,14 +34,14 @@ df <- dbGetQuery(con, query1)
 dbDisconnect(con)
 ```
 
-```{r echo=False, results=False}
+```{r echo=FALSE, results=FALSE}
 # inspect the data
 str(df)
 ```
 
 # Data
 
-```{r, echo=False}
+```{r echo=FALSE}
 # print a sample of the data
 head(df)
 ```
@@ -63,7 +63,7 @@ df$Casual <- NULL
 
 Analyze correlations between numeric variables
 
-```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}}
+```{r echo=FALSE, fig.align="center", message = FALSE, warning = FALSE}
 # inspect correlations between variables
 df.num <- df[, sapply(df, is.numeric)]
 df.num.M <- cor(df.num)
