@@ -49,7 +49,7 @@ df <- na.omit(df)
 
 ```{r echo=TRUE}
 # look at the data
-head(df)
+tail(df)
 ```
 
 # Inspection
@@ -109,5 +109,28 @@ summary(fit)
 plot(fit)
 ```
 
+```{r}
+# look for observations with high leverage
+cutoff <- 4/((nrow(df)-length(fit$coefficients)-2))
+plot(fit, which=4, cook.levels=cutoff)
+```
 
+```{r}
+# join the results with original data
+results <- cbind(pred = predict(fit), resid = resid(fit), std_resid = rstandard(fit), df)
+
+# sort the results by residual value
+results <- results[order(results$resid), ]
+
+# inspect outliers
+head(results)
+
+```
+
+```{r}
+# plot residual by weather condition
+ggplot(data = results) +
+  geom_boxplot(mapping = aes(x = weather, y = std_resid, fill = weather)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
+```
 

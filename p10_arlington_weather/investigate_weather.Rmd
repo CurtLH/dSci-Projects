@@ -34,8 +34,8 @@ dbDisconnect(con)
 ```
 
 ```{r}
-# show the first 5 observations
-head(df)
+# show the last 5 observations
+tail(df, 10)
 ```
 
 ```{r}
