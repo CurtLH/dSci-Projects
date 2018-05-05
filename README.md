@@ -18,8 +18,8 @@ Identifying which keywords are most correlated with various key performance indi
 #### [Customer Acquisition and Defection](https://curtlh.github.io/dSci-Projects/p05_customer_acquisition_and_defection/acquisition_vs_retention_models.nb.html)
 Identifying the factors that drive customer acquisition and retention.
 
-#### [Apartment Temperature](https://curtlh.github.io/dSci-Projects/p09_apartment_temperatures/apartment_temperatures.nb.html)
-Comparing internal apartment temperatures to outside temperature. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
+#### [Apartment Temperature](https://curtlh.github.io/dSci-Projects/p09_apartment_temperatures/its_too_hot.html)
+Investigating the temperature inside my apartment compared to outside. Outside data collected via [`WQ`](https://github.com/CurtLH/WQ)
 
 #### [Arlington Weather](https://github.com/CurtLH/dSci-Projects/tree/master/p10_arlington_weather)
 Investigating weather conditions in Arlington, Virginia over time. Data collected via [`WQ`](https://github.com/CurtLH/WQ)
