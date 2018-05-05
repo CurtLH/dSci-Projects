@@ -6,7 +6,7 @@ output:
     df_print: paged
 ---
 
-```{r message=FALSE}
+```{r echo=FALSE, message=FALSE}
 library(RPostgreSQL)
 library(reshape2)
 library(ggplot2)
@@ -21,13 +21,8 @@ con <- dbConnect(dbDriver("PostgreSQL"),
                  user = "postgres", 
                  password = "apassword")
 
-query = "SELECT date_trunc('hour', a.datetime) as datetime, 
-                ROUND(AVG((a.condition -> 'current_observation' ->> 'temp_f')::numeric), 1) AS outside,
-                ROUND(AVG((b.temp)::numeric), 1) AS inside
-        FROM arlington_weather_condition as a, inside_temp as b
-        WHERE date_trunc('hour', a.datetime) = date_trunc('hour', b.datetime)
-        GROUP BY date_trunc('hour', a.datetime)
-        ORDER BY date_trunc('hour', a.datetime)"
+# read SQL query from file
+query = paste(readLines('/home/curtis/github/dSci-Projects/p09_apartment_temperatures/query.sql'), collapse='\n')
 
 
 # store query results in a dataframe 
