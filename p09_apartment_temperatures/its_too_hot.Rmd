@@ -51,3 +51,41 @@ ggplot(data=df.long, aes(x=datetime, y=value, color=variable)) +
   theme(plot.title=element_text(lineheight=.8, face="bold", hjust=0.5),
         legend.title=element_blank(), legend.position="right")
 ```
+
+```{r}
+# connect to the database
+con <- dbConnect(dbDriver("PostgreSQL"), 
+                 dbname = "postgres",
+                 host = "localhost", 
+                 port = 5432,
+                 user = "postgres", 
+                 password = "apassword")
+
+query = "SELECT date_trunc('hour', datetime) as datetime, 
+                ROUND(AVG((condition -> 'current_observation' ->> 'temp_f')::numeric), 1) AS outside
+        FROM arlington_weather_condition
+        WHERE datetime >= '2018-05-01'::date
+        GROUP BY date_trunc('hour', datetime)
+        ORDER BY date_trunc('hour', datetime)"
+
+
+# store query results in a dataframe 
+outside <- dbGetQuery(con, query)
+
+# disconnect from the database
+dbDisconnect(con)
+```
+
+```{r}
+# plot temperatures
+ggplot(data=outside, aes(x=datetime, y=outside)) +
+  geom_line(size=1.0) +
+  geom_point(size=2.0) +
+  xlab('Datetime') + 
+  ylab('Temperature') + 
+  ggtitle('How warm is it outside?') +
+  theme(plot.title=element_text(lineheight=.8, face="bold", hjust=0.5),
+        legend.title=element_blank(), legend.position="right")
+```
+
+
