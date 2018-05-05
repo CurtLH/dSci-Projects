@@ -1,0 +1,53 @@
+---
+title: "Why is it so hot in my apartment?"
+author: "Curtis L. Hampton"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r message=FALSE}
+library(RPostgreSQL)
+library(reshape2)
+library(ggplot2)
+```
+
+```{r}
+# connect to the database
+con <- dbConnect(dbDriver("PostgreSQL"), 
+                 dbname = "postgres",
+                 host = "localhost", 
+                 port = 5432,
+                 user = "postgres", 
+                 password = "apassword")
+
+query = "SELECT date_trunc('hour', a.datetime) as datetime, 
+                ROUND(AVG((a.condition -> 'current_observation' ->> 'temp_f')::numeric), 1) AS outside,
+                ROUND(AVG((b.temp)::numeric), 1) AS inside
+        FROM arlington_weather_condition as a, inside_temp as b
+        WHERE date_trunc('hour', a.datetime) = date_trunc('hour', b.datetime)
+        GROUP BY date_trunc('hour', a.datetime)
+        ORDER BY date_trunc('hour', a.datetime)"
+
+
+# store query results in a dataframe 
+df <- dbGetQuery(con, query)
+
+# disconnect from the database
+dbDisconnect(con)
+```
+
+```{r}
+# reshape the data
+df.long <- melt(df, id=c('datetime'))
+
+# plot temperatures
+ggplot(data=df.long, aes(x=datetime, y=value, color=variable)) +
+  geom_line(size=1.0) +
+  geom_point(size=2.0) +
+  xlab('Datetime') + 
+  ylab('Temperature') + 
+  ggtitle('How warm is it in my apartment?') +
+  theme(plot.title=element_text(lineheight=.8, face="bold", hjust=0.5),
+        legend.title=element_blank(), legend.position="right")
+```
