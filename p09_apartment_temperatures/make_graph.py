@@ -90,5 +90,5 @@ show(p)
 
 # commit the changes
 run(['git', 'add', '.'])
-run(['git', 'commit', '-m', 'AutoCommit: Updated Chart'])
-run(['git', 'push'])
+run(['git', 'commit', '--amend', '--no-edit'])
+run(['git', 'push', '-f'])
