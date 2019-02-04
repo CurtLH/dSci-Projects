@@ -1,0 +1,39 @@
+---
+title: "Refusbished Macbook Pro Prices"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+
+df <- read.csv('./macbook_pro_refurb.csv', strip.white = TRUE, stringsAsFactors = TRUE)
+head(df)
+```
+
+
+```{r}
+fit <- lm(price ~ date + memory + storage + graphics, data=df)
+summary(fit)
+```
+
+```{r}
+plot(fit)
+```
+
+
+```{r}
+results <- cbind(pred = predict(fit), resid = resid(fit), std_resid = rstandard(fit), df)
+results
+```
+
+
+```{r}
+results <- results %>%
+  arrange(resid)
+```
+
+```{r}
+write.csv(results, "results.csv")
+```
+
+
